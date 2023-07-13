@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Creatuity\AIContent\Model;
 
-use Creatuity\AIContent\Model\Config\GetAttributesLabels;
+use Creatuity\AIContent\Model\Config\GetDescriptionAttributes;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ResourceModel\Product\Collection;
@@ -15,7 +15,7 @@ class GetProductWithChildren
 {
     public function __construct(
         private readonly CollectionFactory $collectionFactory,
-        private readonly GetAttributesLabels $descriptionAttributes,
+        private readonly GetDescriptionAttributes $descriptionAttributes,
         private readonly MetadataPool $metadataPool
     ) {
     }
@@ -32,7 +32,7 @@ class GetProductWithChildren
         //@phpstan-ignore-next-line
         $collection
             ->addFieldToFilter($linkField, ['in' => $childrenIds])
-            ->addAttributeToSelect(array_keys($this->descriptionAttributes->get($attrCodes, $storeId)))
+            ->addAttributeToSelect($attrCodes ?: array_keys($this->descriptionAttributes->execute($storeId)))
             ->setStoreId($storeId);
 
         return $collection;

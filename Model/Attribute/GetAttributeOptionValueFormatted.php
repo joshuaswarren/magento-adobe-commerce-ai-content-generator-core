@@ -14,11 +14,12 @@ class GetAttributeOptionValueFormatted
     public function execute(string $attrCode, int|string $option): ?string
     {
         $val = $this->getAttributeOptionValue->execute($attrCode, $option);
+        $val = html_entity_decode($val);
         $val = str_replace("\n", " ", strip_tags($val));
         if (!$val) {
             return null;
         }
 
-        return $val;
+        return "$val";
     }
 }

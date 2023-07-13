@@ -1,8 +1,31 @@
-.admin__field.admin__field-group-additional.admin__field-small.admin__button-aicontent-form {
-    display: inline-block;
+.admin__field.admin__field-group-additional {
+    &.admin__field-small.admin__button-aicontent-form {
+        display: inline-block;
 
-    &.margin-left-10 {
-        margin-left: 10px;
+        &.margin-left-10 {
+            margin-left: 10px;
+        }
+    }
+}
+
+.admin__fieldset-wrapper-content .admin__field-control .admin__field.display-block {
+    display: block;
+}
+
+.admin__fieldset-wrapper-content .admin__field-control .admin__field {
+    &.ai_content__min-length, &.ai_content__max-length {
+        margin-top: 0;
+        display: inline-flex;
+        padding: 0;
+
+        .admin__field-label {
+            min-width: 80px;
+            margin-right: 20px !important;
+            width: fit-content !important;
+            position: relative !important;
+            height: fit-content !important;
+            display: inline-block;
+        }
     }
 }
 

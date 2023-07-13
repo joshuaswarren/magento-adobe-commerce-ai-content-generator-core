@@ -6,6 +6,9 @@ namespace Creatuity\AIContent\Api\Data;
 
 interface SpecificationInterface
 {
+    public const DESCRIPTION_DEFAULT_MAX_LENGTH = 9999;
+    public const SHORT_DESCRIPTION_DEFAULT_MAX_LENGTH = 1000;
+
     public const CONTENT_TYPE = 'content_type';
     public const PRODUCT_ID = 'product_id';
     public const PRODUCT_ATTRIBUTES = 'product_attributes';

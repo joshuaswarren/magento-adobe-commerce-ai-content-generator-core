@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="creatuity" translate="label" sortOrder="100">
+            <label>Creatuity</label>
+        </tab>
+        <section id="creatuityaicontent" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>AI Content</label>
+            <tab>creatuity</tab>
+            <resource>Creatuity_AIContent::admin</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInStore="1" showInDefault="1" showInWebsite="1">
+                <label>General</label>
+                <field id="enabled" type="select" translate="label" sortOrder="10" showInStore="0" showInDefault="1" showInWebsite="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="aiprovider" type="select" translate="label" sortOrder="10" showInStore="1" showInDefault="1" showInWebsite="1">
+                    <label>AI Provider</label>
+                    <source_model>Creatuity\AIContent\Model\Config\Source\AIProviderOptionSource</source_model>
+                </field>
+                <field id="product_description_attributes" translate="label comment" type="multiselect" sortOrder="30" showInStore="1" showInWebsite="1" showInDefault="1" canRestore="1">
+                    <label>Description Attribute</label>
+                    <comment>Which attribute(s) should be used to generate product description.</comment>
+                    <source_model>Creatuity\AIContent\Model\Config\Source\DescriptionAttributesOptionSource</source_model>
+                    <validate>required-entry</validate>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

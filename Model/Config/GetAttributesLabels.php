@@ -10,7 +10,6 @@ use Creatuity\AIContent\Model\Attribute\GetAttributeLabels;
 class GetAttributesLabels
 {
     public function __construct(
-        private readonly GetDescriptionAttributes $getDescriptionAttributes,
         private readonly GetAttributeLabels $getAttributeLabels
     ) {
     }
@@ -19,14 +18,12 @@ class GetAttributesLabels
      * @return array<string, string>
      * @throws NoDescriptionAttributesChosenException
      */
-    public function get(array $attrCodes = [], ?int $storeId = null): array
+    public function get(array $attrCodes): array
     {
-        $attrs = $attrCodes ?: $this->getDescriptionAttributes->execute($storeId);
-
-        if (empty($attrs)) {
+        if (empty($attrCodes)) {
             throw new NoDescriptionAttributesChosenException(__('No description attributes found'));
         }
 
-        return $this->getAttributeLabels->execute($attrs);
+        return $this->getAttributeLabels->execute($attrCodes);
     }
 }

@@ -9,7 +9,7 @@ use Magento\Store\Model\ScopeInterface;
 class AiContentGeneralConfig
 {
     private const XML_PATH_AICONTENT_ENABLED = 'creatuityaicontent/general/enabled';
-    private const XML_PATH_DESC_ATTRS = 'creatuityaicontent/general/description_attributes';
+    private const XML_PATH_DESC_ATTRS = 'creatuityaicontent/general/product_description_attributes';
     private const XML_PATH_AI_PROVIDER = 'creatuityaicontent/general/aiprovider';
 
     public function __construct(

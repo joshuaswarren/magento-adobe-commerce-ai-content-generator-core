@@ -35,8 +35,8 @@ class PreparePromptTest extends TestCase
                 'max_len' => $maxLength
             ]
         );
-        $prompt .= "\n\n" . __('Product attributes:') . "\n";
-        $prompt .= $attributeText;
+        $prompt .= "\n" . __('Product attributes:') . "\n";
+        $prompt .= $attributeText . "\n\n";
         $this->attributesDataProvider->expects($this->once())->method('execute')->willReturn($attributeText);
         $specification = $this->createMock(SpecificationInterface::class);
         $specification->expects($this->once())->method('getContentType')->willReturn($type);

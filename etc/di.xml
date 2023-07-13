@@ -71,4 +71,36 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="Creatuity\AIContent\Model\SpecificationHydrator">
+        <arguments>
+            <argument name="settings" xsi:type="array">
+                <item name="description" xsi:type="array">
+                    <item name="type" xsi:type="const">Creatuity\AIContent\Enum\AiContentTypeEnum::DESCRIPTION_TYPE</item>
+                    <item name="min_len" xsi:type="number">0</item>
+                    <item name="max_len" xsi:type="number">9999</item>
+                </item>
+                <item name="short_description" xsi:type="array">
+                    <item name="type" xsi:type="const">Creatuity\AIContent\Enum\AiContentTypeEnum::SHORT_DESCRIPTION_TYPE</item>
+                    <item name="min_len" xsi:type="number">0</item>
+                    <item name="max_len" xsi:type="number">9999</item>
+                </item>
+                <item name="meta_title" xsi:type="array">
+                    <item name="type" xsi:type="const">Creatuity\AIContent\Enum\AiContentTypeEnum::META_TITLE_TYPE</item>
+                    <item name="min_len" xsi:type="number">50</item>
+                    <item name="max_len" xsi:type="number">60</item>
+                </item>
+                <item name="meta_keywords" xsi:type="array">
+                    <item name="type" xsi:type="const">Creatuity\AIContent\Enum\AiContentTypeEnum::META_KEYWORDS_TYPE</item>
+                    <item name="min_len" xsi:type="number">8</item>
+                    <item name="max_len" xsi:type="number">10</item>
+                </item>
+                <item name="meta_description" xsi:type="array">
+                    <item name="type" xsi:type="const">Creatuity\AIContent\Enum\AiContentTypeEnum::META_DESCRIPTION_TYPE</item>
+                    <item name="min_len" xsi:type="number">0</item>
+                    <item name="max_len" xsi:type="number">150</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
 </config>

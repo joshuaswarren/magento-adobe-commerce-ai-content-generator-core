@@ -11,6 +11,7 @@ interface SpecificationInterface
     public const PRODUCT_ATTRIBUTES = 'product_attributes';
     public const MIN_LENGTH = 'min_length';
     public const MAX_LENGTH = 'max_length';
+    public const STORE_ID = 'store_id';
 
     /**
      * @return string

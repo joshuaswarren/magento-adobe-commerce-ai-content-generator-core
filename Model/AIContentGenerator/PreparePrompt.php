@@ -9,8 +9,16 @@ use Creatuity\AIContent\Model\Attribute\AttributesDataProviderInterface;
 
 class PreparePrompt
 {
+    public const STOP = "\n\n";
+
+    private const CONTENT_TYPES = [
+        'short_description' => 'short description',
+        'description' => 'description'
+    ];
+
     public function __construct(
         private readonly AttributesDataProviderInterface $attributesDataProvider,
+        private readonly array $contentTypes = self::CONTENT_TYPES
     ) {
     }
 
@@ -19,13 +27,14 @@ class PreparePrompt
         $prompt = (string) __(
             $template,
             [
-                'type' => $specification->getContentType(),
-                'max_len' => $specification->getMaxLength(),
-                'min_len' => $specification->getMinLength()
+                'type' => $this->contentTypes[$specification->getContentType()] ?? $specification->getContentType(),
+                'max_len' => $specification->getMaxLength() ?: 999,
+                'min_len' => $specification->getMinLength() ?: 50
             ]
         );
-        $prompt .= "\n\n" . __('Product attributes:') . "\n";
+        $prompt .= "\n" . __('Product attributes:') . "\n";
         $prompt .= $this->attributesDataProvider->execute($specification);
+        $prompt .= self::STOP;
 
         return $prompt;
     }

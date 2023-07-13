@@ -14,6 +14,7 @@ interface AIProviderInterface
      * @return AIResponseInterface
      * @throws \Creatuity\AIContentOpenAI\Exception\OpenAiModelHandlerNotFoundException
      * @throws \Creatuity\AIContentOpenAI\Exception\UnsupportedOpenAiModelException
+     * @throw \Magento\Framework\Exception\LocalizedException;
      */
     public function call(AIRequestInterface $request): AIResponseInterface;
 

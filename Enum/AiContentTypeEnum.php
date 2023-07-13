@@ -6,11 +6,17 @@ namespace Creatuity\AIContent\Enum;
 
 enum AiContentTypeEnum: string
 {
+    const DESCRIPTION_TYPE = 'description';
+    const META_KEYWORDS_TYPE = 'meta-keywords';
+    const META_TITLE_TYPE = 'meta-title';
+    const META_DESCRIPTION_TYPE = 'meta-description';
+    const SHORT_DESCRIPTION_TYPE = 'short_description';
+
     case DESCRIPTION_GROUP = 'descriptions';
     case META_GROUP = 'meta_tags';
-    case DESCRIPTION = 'description';
-    case SHOR_DESCRIPTION = 'short_description';
-    case META_KEYWORDS = 'meta-keywords';
-    case META_TITLE = 'meta-title';
-    case META_DESCRIPTION = 'meta-description';
+    case DESCRIPTION = self::DESCRIPTION_TYPE;
+    case SHOR_DESCRIPTION = self::SHORT_DESCRIPTION_TYPE;
+    case META_KEYWORDS = self::META_KEYWORDS_TYPE;
+    case META_TITLE = self::META_TITLE_TYPE;
+    case META_DESCRIPTION = self::META_DESCRIPTION_TYPE;
 }

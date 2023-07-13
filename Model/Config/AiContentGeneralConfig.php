@@ -49,10 +49,6 @@ class AiContentGeneralConfig
 
         $attrs = explode(',', $val);
 
-        return array_map(
-            function ($attr) {
-                return trim($attr);
-            }, $attrs
-        );
+        return array_map('trim', $attrs);
     }
 }

@@ -18,15 +18,17 @@ define([
     return Button.extend({
         defaults: {
             imports: {
-                product_id: "${ $.provider }:data.product_id",
-                settings: "${ $.provider }:data.settings"
+                productId: "${ $.provider }:data.product_id",
+                settings: "${ $.provider }:data.settings",
+                storeId: "${ $.provider }:data.store_id"
             }
         },
 
         initObservable: function () {
             this._super()
                 .observe([
-                    'product_id'
+                    'productId',
+                    'storeId'
                 ]);
 
             return this;
@@ -114,10 +116,11 @@ define([
                 data : {
                     "specification": {
                         "content_type": type,
-                        "product_id": this.product_id(),
+                        "product_id": this.productId(),
                         "product_attributes": [],
                         "min_length": this.getMinLength(),
-                        "max_length": this.getMaxLength()
+                        "max_length": this.getMaxLength(),
+                        "store_id": this.storeId()
                     }
                 },
                 url: url

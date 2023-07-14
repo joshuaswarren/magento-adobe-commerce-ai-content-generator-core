@@ -37,7 +37,8 @@ class AIFormDataProvider extends AbstractDataProvider
             '' => [
                 'product_id' => $this->request->getParam('product_id'),
                 'description_max_length' => SpecificationInterface::DESCRIPTION_DEFAULT_MAX_LENGTH,
-                'short_description_max_length' => SpecificationInterface::SHORT_DESCRIPTION_DEFAULT_MAX_LENGTH
+                'short_description_max_length' => SpecificationInterface::SHORT_DESCRIPTION_DEFAULT_MAX_LENGTH,
+                'store_id' => $this->request->getParam('store', 0)
             ],
         ];
     }

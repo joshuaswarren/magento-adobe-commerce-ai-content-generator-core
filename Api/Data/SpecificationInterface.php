@@ -70,4 +70,15 @@ interface SpecificationInterface
      * @return void
      */
     public function setMaxLength(int $length): void;
+
+    /**
+     * @return int
+     */
+    public function getStoreId(): int;
+
+    /**
+     * @param int $id
+     * @return void
+     */
+    public function setStoreId(int $id): void;
 }

@@ -22,7 +22,8 @@ class AttributesForProductAndChildren implements AttributesDataProviderInterface
         $attrCodes = $specification->getProductAttributes();
         $collection = $this->collectionFactory->create();
         $collection->addFieldToSelect($attrCodes);
-        $collection->addFieldToFilter('entity_id', $specification->getProductId());
+        $collection->addFieldToFilter('entity_id', ['eq' => $specification->getProductId()]);
+        $collection->setStoreId($specification->getStoreId());
         /** @var \Magento\Catalog\Model\Product $product */
         $product = $collection->getFirstItem();
 

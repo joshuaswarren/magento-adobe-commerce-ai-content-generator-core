@@ -43,8 +43,9 @@ class GetSectionConfiguration
                                     'formElement' => 'container',
                                     'componentType' => 'container',
                                     'label' => false,
+                                    'isCreateProductPage' => $this->isProductCreatePage->execute(),
                                     'content' => $sectionMsg,
-                                    'template' => 'ui/form/components/complex'
+                                    'template' => 'Creatuity_AIContent/form/component/ai-section'
                                 ]
                             ]
                         ],

@@ -14,7 +14,6 @@ class AddGenerateMetaTagsWithAIButtonModifier extends AbstractModifier
 
     public function __construct(
         private readonly AiContentGeneralConfig $aiContentGeneralConfig,
-        private readonly IsProductCreatePage $isProductCreatePage,
         private readonly GetSectionConfiguration $getSectionConfiguration
     )
     {
@@ -31,11 +30,6 @@ class AddGenerateMetaTagsWithAIButtonModifier extends AbstractModifier
             return $meta;
         }
         $msg = __('You can use AI to generate META DATA automatically based on product name and description.');
-        if ($this->isProductCreatePage->execute()) {
-            $msg .= '<br />';
-            $msg .= '<strong>' . __('The functionality will be available after the product is created.') . '</strong>';
-        }
-
         $section = $this->getSectionConfiguration->execute((string) $msg, AiContentTypeEnum::META_GROUP->value);
         $meta['search-engine-optimization']['children'] += $section;
         $meta['search-engine-optimization']['children']['container_url_key']['arguments']['data']['config']['sortOrder'] = 10;

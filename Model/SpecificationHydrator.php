@@ -40,7 +40,7 @@ class SpecificationHydrator
             );
         }
 
-        $storeId = $data[SpecificationInterface::STORE_ID] ?? null;
+        $storeId = (int) ($data[SpecificationInterface::STORE_ID] ?? 0);
         $attributes = $data[SpecificationInterface::PRODUCT_ATTRIBUTES] ?? [];
         $data[SpecificationInterface::PRODUCT_ATTRIBUTES] = $attributes ?: $this->getDescriptionAttributes->execute($storeId);
 

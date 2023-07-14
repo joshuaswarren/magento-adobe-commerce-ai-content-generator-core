@@ -24,7 +24,7 @@ class RetrieveAttributesForProduct
         $descAttrs = [];
         foreach ($attrs as $attrCode => $label) {
             $val = (string)$product->getData($attrCode);
-            if (!$val) {
+            if ($val === '') {
                 continue;
             }
 

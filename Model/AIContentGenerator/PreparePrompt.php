@@ -28,8 +28,8 @@ class PreparePrompt
             $template,
             [
                 'type' => $this->contentTypes[$specification->getContentType()] ?? $specification->getContentType(),
-                'max_len' => $specification->getMaxLength() ?: 999,
-                'min_len' => $specification->getMinLength() ?: 50
+                'max_len' => $specification->getMaxLength() ?: SpecificationInterface::MAX_LENGTH,
+                'min_len' => $specification->getMinLength() ?: 0
             ]
         );
         $prompt .= "\n" . __('Product attributes:') . "\n";

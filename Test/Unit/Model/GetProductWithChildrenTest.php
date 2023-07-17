@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Creatuity\AIContent\Test\Unit\Model;
 
-use Creatuity\AIContent\Model\Config\GetAttributesLabels;
+use Creatuity\AIContent\Model\Config\GetDescriptionAttributes;
 use Creatuity\AIContent\Model\GetProductWithChildren;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Product;
@@ -19,7 +19,7 @@ use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 class GetProductWithChildrenTest extends TestCase
 {
     private readonly CollectionFactory|MockObject $collectionFactory;
-    private readonly GetAttributesLabels|MockObject $descriptionAttributes;
+    private readonly GetDescriptionAttributes|MockObject $descriptionAttributes;
     private readonly MetadataPool|MockObject $metadataPool;
 
     protected function setUp(): void
@@ -28,7 +28,7 @@ class GetProductWithChildrenTest extends TestCase
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
-        $this->descriptionAttributes = $this->createMock(GetAttributesLabels::class);
+        $this->descriptionAttributes = $this->createMock(GetDescriptionAttributes::class);
         $this->metadataPool = $this->createMock(MetadataPool::class);
     }
 
@@ -39,7 +39,6 @@ class GetProductWithChildrenTest extends TestCase
         $childrenIds = [[345, 678, 890]];
         $storeId = 1;
         $attrCodes = ['color', 'size', 'name'];
-        $attrCodesWithLabels = ['color' => 'Color', 'size' => 'Size', 'name' => 'Product Name'];
 
         $metaData = $this->createMock(EntityMetadataInterface::class);
         $metaData->expects($this->once())->method('getLinkField')->willReturn($linkField);
@@ -56,11 +55,7 @@ class GetProductWithChildrenTest extends TestCase
         $product->expects($this->once())->method('getStoreId')->willReturn($storeId);
         $product->expects($this->once())->method('getTypeInstance')->willReturn($typeInstance);
 
-        $this->descriptionAttributes
-            ->expects($this->once())
-            ->method('get')
-            ->with($attrCodes, $storeId)
-            ->willReturn($attrCodesWithLabels);
+        $this->descriptionAttributes->expects($this->never())->method('execute');
 
         $childrenIds = array_merge([], ...$childrenIds);
         $childrenIds[] = $id;
@@ -74,7 +69,7 @@ class GetProductWithChildrenTest extends TestCase
         $collection
             ->expects($this->once())
             ->method('addAttributeToSelect')
-            ->with(array_keys($attrCodesWithLabels))
+            ->with($attrCodes)
             ->willReturnSelf();
         $collection
             ->expects($this->once())

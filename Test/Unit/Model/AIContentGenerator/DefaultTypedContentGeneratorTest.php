@@ -32,10 +32,10 @@ class DefaultTypedContentGeneratorTest extends TestCase
         $prompt = 'Some prompt';
         $content = 'Some generated content';
         $this->preparePrompt->expects($this->once())->method('generate')->with($specification, $promptTemplate)->willReturn($prompt);
-//        $this->generateContent->expects($this->once())->method('execute')->with($prompt)->willReturn($content); //TODO uncomment in INTACR-7
+        $this->generateContent->expects($this->once())->method('execute')->with($prompt)->willReturn($content);
         $object = $this->getObject($type, $promptTemplate);
         $result = $object->execute($specification);
-//        $this->assertSame($content, $result); //TODO uncomment in INTACR-7
+        $this->assertSame($content, $result);
     }
 
     /**
@@ -48,10 +48,10 @@ class DefaultTypedContentGeneratorTest extends TestCase
         $prompt = 'Some prompt';
         $content = 'Some generated content';
         $this->preparePrompt->expects($this->once())->method('generate')->with($specification, $promptTemplate)->willReturn($prompt);
-//        $this->generateContent->expects($this->once())->method('execute')->with($prompt)->willReturn($content); //TODO uncomment in INTACR-7
+        $this->generateContent->expects($this->once())->method('execute')->with($prompt)->willReturn($content);
         $object = $this->getObject($type, $promptTemplate, $attrs);
         $result = $object->execute($specification);
-//        $this->assertSame($content, $result); //TODO uncomment in INTACR-7
+        $this->assertSame($content, $result);
     }
 
     /**

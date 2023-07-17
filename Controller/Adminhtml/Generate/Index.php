@@ -11,6 +11,8 @@ use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Psr\Log\LoggerInterface;
 
 class Index extends Action implements HttpPostActionInterface
 {
@@ -18,7 +20,8 @@ class Index extends Action implements HttpPostActionInterface
         Context $context,
         private readonly JsonFactory $jsonResultFactory,
         private readonly RequestProcessor $requestProcessor,
-        private readonly RequestInterface $request
+        private readonly RequestInterface $request,
+        private readonly LoggerInterface $logger
     ) {
         parent::__construct($context);
     }
@@ -27,9 +30,30 @@ class Index extends Action implements HttpPostActionInterface
     {
         $jsonResult = $this->jsonResultFactory->create();
 
+        try {
+            $jsonResult->setData([
+                'success' => true,
+                'text' => $this->requestProcessor->execute($this->request->getParam('specification', []))
+            ]);
+        } catch (LocalizedException $e) {
+            return $this->returnError((string) $e->getMessage());
+        } catch (\Throwable $t) {
+            $this->logger->error('AI content generating error', ['exception' => $t]);
+
+            return $this->returnError((string) __('Unknown error occurred. Try again later.'));
+        }
+
+        return $jsonResult;
+    }
+
+    private function returnError(string $msg): ResultInterface
+    {
+        $jsonResult = $this->jsonResultFactory->create();
         $jsonResult->setData([
-            'text' => $this->requestProcessor->execute($this->request->getParam('specification', []))
+            'success' => false,
+            'message' => $msg
         ]);
+        $jsonResult->setHttpResponseCode(500);
 
         return $jsonResult;
     }

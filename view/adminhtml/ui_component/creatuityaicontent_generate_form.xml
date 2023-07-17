@@ -54,6 +54,22 @@
                     <settings>
                         <dataType>text</dataType>
                         <label translate="true">Short Description</label>
+                        <additionalClasses>
+                            <class name="display-block">true</class>
+                        </additionalClasses>
+                    </settings>
+                </field>
+                <field name="short_description_max_length" formElement="input">
+                    <settings>
+                        <dataType>int</dataType>
+                        <label translate="true">Max. length</label>
+                        <additionalClasses>
+                            <class name="ai_content__max-length">true</class>
+                        </additionalClasses>
+                        <validation>
+                            <rule name="validate-digits" xsi:type="boolean">true</rule>
+                            <rule name="validate-greater-than-zero" xsi:type="boolean">true</rule>
+                        </validation>
                     </settings>
                 </field>
                 <button name="short_description_generate_btn"
@@ -71,6 +87,7 @@
                             <item name="reference" xsi:type="string">product_form.product_form.content.container_short_description.short_description</item>
                             <item name="destination" xsi:type="string">ns = ${ $.ns }, index=short_description</item>
                             <item name="applyBtn" xsi:type="string">ns = ${ $.ns }, index=apply_short_description_btn</item>
+                            <item name="maxLength" xsi:type="string">ns = ${ $.ns }, index=short_description_max_length</item>
                         </item>
                     </argument>
                 </button>
@@ -106,6 +123,22 @@
                     <settings>
                         <dataType>text</dataType>
                         <label translate="true">Description</label>
+                        <additionalClasses>
+                            <class name="display-block">true</class>
+                        </additionalClasses>
+                    </settings>
+                </field>
+                <field name="description_max_length" formElement="input">
+                    <settings>
+                        <dataType>int</dataType>
+                        <label translate="true">Max. length</label>
+                        <additionalClasses>
+                            <class name="ai_content__max-length">true</class>
+                        </additionalClasses>
+                        <validation>
+                            <rule name="validate-digits" xsi:type="boolean">true</rule>
+                            <rule name="validate-greater-than-zero" xsi:type="boolean">true</rule>
+                        </validation>
                     </settings>
                 </field>
                 <button name="description_generate_btn"
@@ -123,6 +156,7 @@
                             <item name="reference" xsi:type="string">product_form.product_form.content.container_description.description</item>
                             <item name="destination" xsi:type="string">ns = ${ $.ns }, index=description</item>
                             <item name="applyBtn" xsi:type="string">ns = ${ $.ns }, index=apply_description_btn</item>
+                            <item name="maxLength" xsi:type="string">ns = ${ $.ns }, index=description_max_length</item>
                         </item>
                     </argument>
                 </button>

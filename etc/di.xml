@@ -16,21 +16,21 @@
     <virtualType name="ShortDescriptionGenerator" type="Creatuity\AIContent\Model\AIContentGenerator\DefaultTypedContentGenerator">
         <arguments>
             <argument name="type" xsi:type="string">short_description</argument>
-            <argument name="promptTemplate" xsi:type="string">Generate product %type based on product attributes given below. Description should be no longer then %max_len characters.</argument>
+            <argument name="promptTemplate" xsi:type="string">Generate product %type based on product attributes given below. Description should be no longer then %max_len characters. You can use HTML tags to format the look.</argument>
         </arguments>
     </virtualType>
 
     <virtualType name="DescriptionGenerator" type="Creatuity\AIContent\Model\AIContentGenerator\DefaultTypedContentGenerator">
         <arguments>
             <argument name="type" xsi:type="string">description</argument>
-            <argument name="promptTemplate" xsi:type="string">Generate product %type based on product attributes given below. Description should be no longer then %max_len characters.</argument>
+            <argument name="promptTemplate" xsi:type="string">Generate product %type based on product attributes given below. Description should be no longer then %max_len characters. You can use HTML tags to format the look</argument>
         </arguments>
     </virtualType>
 
     <virtualType name="MetaDescriptionGenerator" type="Creatuity\AIContent\Model\AIContentGenerator\DefaultTypedContentGenerator">
         <arguments>
             <argument name="type" xsi:type="string">meta-description</argument>
-            <argument name="promptTemplate" xsi:type="string">Generate %type for website presenting the products with attributes given below. Text should be no longer than 150 characters.</argument>
+            <argument name="promptTemplate" xsi:type="string">Generate website %type for the products with attributes given below. Text should be no longer than 150 characters.</argument>
             <argument name="attributes" xsi:type="array">
                 <item name="name" xsi:type="string">name</item>
                 <item name="description" xsi:type="string">description</item>
@@ -41,7 +41,7 @@
     <virtualType name="MetaKeywordsGenerator" type="Creatuity\AIContent\Model\AIContentGenerator\DefaultTypedContentGenerator">
         <arguments>
             <argument name="type" xsi:type="string">meta-keywords</argument>
-            <argument name="promptTemplate" xsi:type="string">Generate from 8 to 10 comma-separated %type for website presenting with attributes given below.</argument>
+            <argument name="promptTemplate" xsi:type="string">Generate from 8 to 10 comma-separated website %type for the product with attributes given below.</argument>
             <argument name="attributes" xsi:type="array">
                 <item name="name" xsi:type="string">name</item>
                 <item name="description" xsi:type="string">description</item>
@@ -52,7 +52,7 @@
     <virtualType name="MetaTitleGenerator" type="Creatuity\AIContent\Model\AIContentGenerator\DefaultTypedContentGenerator">
         <arguments>
             <argument name="type" xsi:type="string">meta-title</argument>
-            <argument name="promptTemplate" xsi:type="string">Generate %type for website presenting the products with attributes given below. Text should contain more and less 50 - 60 characters.</argument>
+            <argument name="promptTemplate" xsi:type="string">Generate website %type for the products with attributes given below. Text should contain more and less 50 - 60 characters.</argument>
             <argument name="attributes" xsi:type="array">
                 <item name="name" xsi:type="string">name</item>
                 <item name="description" xsi:type="string">description</item>
@@ -68,6 +68,38 @@
                 <item name="meta-description" xsi:type="object">MetaDescriptionGenerator</item>
                 <item name="meta-keywords" xsi:type="object">MetaKeywordsGenerator</item>
                 <item name="meta-title" xsi:type="object">MetaTitleGenerator</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Creatuity\AIContent\Model\SpecificationHydrator">
+        <arguments>
+            <argument name="settings" xsi:type="array">
+                <item name="description" xsi:type="array">
+                    <item name="type" xsi:type="const">Creatuity\AIContent\Enum\AiContentTypeEnum::DESCRIPTION_TYPE</item>
+                    <item name="min_len" xsi:type="number">0</item>
+                    <item name="max_len" xsi:type="const">Creatuity\AIContent\Api\Data\SpecificationInterface::DESCRIPTION_DEFAULT_MAX_LENGTH</item>
+                </item>
+                <item name="short_description" xsi:type="array">
+                    <item name="type" xsi:type="const">Creatuity\AIContent\Enum\AiContentTypeEnum::SHORT_DESCRIPTION_TYPE</item>
+                    <item name="min_len" xsi:type="number">0</item>
+                    <item name="max_len" xsi:type="const">Creatuity\AIContent\Api\Data\SpecificationInterface::SHORT_DESCRIPTION_DEFAULT_MAX_LENGTH</item>
+                </item>
+                <item name="meta_title" xsi:type="array">
+                    <item name="type" xsi:type="const">Creatuity\AIContent\Enum\AiContentTypeEnum::META_TITLE_TYPE</item>
+                    <item name="min_len" xsi:type="number">50</item>
+                    <item name="max_len" xsi:type="number">60</item>
+                </item>
+                <item name="meta_keywords" xsi:type="array">
+                    <item name="type" xsi:type="const">Creatuity\AIContent\Enum\AiContentTypeEnum::META_KEYWORDS_TYPE</item>
+                    <item name="min_len" xsi:type="number">8</item>
+                    <item name="max_len" xsi:type="number">10</item>
+                </item>
+                <item name="meta_description" xsi:type="array">
+                    <item name="type" xsi:type="const">Creatuity\AIContent\Enum\AiContentTypeEnum::META_DESCRIPTION_TYPE</item>
+                    <item name="min_len" xsi:type="number">0</item>
+                    <item name="max_len" xsi:type="number">150</item>
+                </item>
             </argument>
         </arguments>
     </type>

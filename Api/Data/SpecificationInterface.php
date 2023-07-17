@@ -6,11 +6,15 @@ namespace Creatuity\AIContent\Api\Data;
 
 interface SpecificationInterface
 {
+    public const DESCRIPTION_DEFAULT_MAX_LENGTH = 9999;
+    public const SHORT_DESCRIPTION_DEFAULT_MAX_LENGTH = 1000;
+
     public const CONTENT_TYPE = 'content_type';
     public const PRODUCT_ID = 'product_id';
     public const PRODUCT_ATTRIBUTES = 'product_attributes';
     public const MIN_LENGTH = 'min_length';
     public const MAX_LENGTH = 'max_length';
+    public const STORE_ID = 'store_id';
 
     /**
      * @return string
@@ -66,4 +70,15 @@ interface SpecificationInterface
      * @return void
      */
     public function setMaxLength(int $length): void;
+
+    /**
+     * @return int
+     */
+    public function getStoreId(): int;
+
+    /**
+     * @param int $id
+     * @return void
+     */
+    public function setStoreId(int $id): void;
 }

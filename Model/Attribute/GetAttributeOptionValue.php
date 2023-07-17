@@ -26,6 +26,7 @@ class GetAttributeOptionValue
             return match($attribute->getFrontendInput()) {
                 'select' => (string) $attribute->getSource()->getOptionText($option),
                 'multiselect' => $this->getMultiselectAttributeValuesByOption->execute($attribute, (string) $option),
+                'boolean' => $option ? (string)__('Yes') : (string)__('No'),
                 default => (string) $option
             };
         } catch (LocalizedException $e) {

@@ -2,8 +2,9 @@ define([
     'jquery',
     'Magento_Ui/js/form/components/button',
     'uiRegistry',
+    'Magento_Ui/js/modal/alert',
     'loader'
-], function ($, Button, uiRegistry) {
+], function ($, Button, uiRegistry, alert) {
     'use strict';
 
     const loaderStart = function () {
@@ -17,14 +18,17 @@ define([
     return Button.extend({
         defaults: {
             imports: {
-                product_id: "${ $.provider }:data.product_id"
+                productId: "${ $.provider }:data.product_id",
+                settings: "${ $.provider }:data.settings",
+                storeId: "${ $.provider }:data.store_id"
             }
         },
 
         initObservable: function () {
             this._super()
                 .observe([
-                    'product_id'
+                    'productId',
+                    'storeId'
                 ]);
 
             return this;
@@ -53,8 +57,47 @@ define([
             }
         },
 
+        getMinLength: function () {
+            let length = this.minLength ? uiRegistry.get(this.minLength).value() : null;
+
+            if (length && length <= 0) {
+                return null;
+            }
+
+            return length;
+        },
+
+        getMaxLength: function () {
+            let length = this.maxLength ? uiRegistry.get(this.maxLength).value() : null;
+
+            if (length && length <= 0) {
+                return null;
+            }
+
+            return length;
+        },
+
         processCommon: function (data) {
+            this.hideError();
             this.fillProxyField(data);
+        },
+
+        displayError: function (msg) {
+            this.hideError();
+            $('body').notification('clear')
+                .notification('add', {
+                    error: true,
+                    message: msg,
+                    insertMethod: function (message) {
+                        const $wrapper = $('<div class="ai-error"></div>').html(message);
+
+                        $('.page-main-actions').after($wrapper);
+                    }
+                });
+        },
+
+        hideError: function () {
+            $('.ai-error').remove();
         },
 
         call: function () {
@@ -73,18 +116,19 @@ define([
                 data : {
                     "specification": {
                         "content_type": type,
-                        "product_id": this.product_id(),
+                        "product_id": this.productId(),
                         "product_attributes": [],
-                        "min_length": null,
-                        "max_length": null
+                        "min_length": this.getMinLength(),
+                        "max_length": this.getMaxLength(),
+                        "store_id": this.storeId()
                     }
                 },
                 url: url
             }).done(function (data) {
                 successHandler(data)
-            }).fail(function ( jqXHR, textStatus, errorThrown) {
-                console.log( jqXHR, textStatus, errorThrown);
-            }).always(function () {
+            }).fail(function ( jqXHR) {
+                this.displayError(jqXHR.responseJSON.message);
+            }.bind(this)).always(function () {
                 loaderStop();
             });
         }

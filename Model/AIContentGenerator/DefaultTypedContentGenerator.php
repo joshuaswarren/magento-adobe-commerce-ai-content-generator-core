@@ -33,8 +33,7 @@ class DefaultTypedContentGenerator implements AITypedContentGeneratorInterface
 
         $prompt = $this->preparePrompt->generate($specification, $this->promptTemplate);
 
-        return 'Test ' . $specification->getContentType();
-//        return $this->generateContent->execute($prompt); //TODO uncomment in INTACR-7
+        return $this->generateContent->execute($prompt);
     }
 
     public function getType(): string

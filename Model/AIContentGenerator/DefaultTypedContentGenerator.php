@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Creatuity\AIContent\Model\AIContentGenerator;
 
 use Creatuity\AIContent\Api\AITypedContentGeneratorInterface;
+use Creatuity\AIContent\Api\Data\AIResponseInterface;
 use Creatuity\AIContent\Api\Data\SpecificationInterface;
 use Creatuity\AIContent\Exception\UnsupportedContentTypeException;
 
@@ -19,7 +20,7 @@ class DefaultTypedContentGenerator implements AITypedContentGeneratorInterface
     ) {
     }
 
-    public function execute(SpecificationInterface $specification): string
+    public function execute(SpecificationInterface $specification): AIResponseInterface
     {
         if ($this->type !== $specification->getContentType()) {
             throw new UnsupportedContentTypeException(
@@ -33,7 +34,7 @@ class DefaultTypedContentGenerator implements AITypedContentGeneratorInterface
 
         $prompt = $this->preparePrompt->generate($specification, $this->promptTemplate);
 
-        return $this->generateContent->execute($prompt);
+        return $this->generateContent->execute($prompt, $specification);
     }
 
     public function getType(): string

@@ -43,17 +43,30 @@ define([
         },
 
         fillProxyField: function (data) {
-            const destination = uiRegistry.get(this.destination);
-            destination.value.subscribe(function (val) {
-                this.setApplyBtnDisableSate(!(val && val.length))
-            }.bind(this))
-            destination.value(data.text);
+            const destinations = typeof this.destination === 'object' ? this.destination : [this.destination];
+            let choices = data.choices;
+
+            $.each(destinations, function (key, dest) {
+                if (!choices.length) {
+                    return;
+                }
+                const destination = uiRegistry.get(dest);
+                destination.value.subscribe(function (val) {
+                    this.setApplyBtnDisableSate(!(val && val.length), destination.applyBtn)
+                }.bind(this))
+                destination.value(choices.pop());
+                destination.visible(true);
+                $.each(destination.containers || [], function (key, container) {
+                    container.visible(true);
+                });
+            }.bind(this));
         },
 
-        setApplyBtnDisableSate: function (state) {
-            const applyBtn = uiRegistry.get(this.applyBtn);
-            if (applyBtn) {
-                applyBtn.disabled(state)
+        setApplyBtnDisableSate: function (state, applyBtn) {
+            const destBtn = uiRegistry.get(applyBtn ? applyBtn : this.applyBtn);
+            if (destBtn) {
+                destBtn.disabled(state);
+                destBtn.visible(!state);
             }
         },
 
@@ -120,7 +133,8 @@ define([
                         "product_attributes": [],
                         "min_length": this.getMinLength(),
                         "max_length": this.getMaxLength(),
-                        "store_id": this.storeId()
+                        "store_id": this.storeId(),
+                        "number": this.number
                     }
                 },
                 url: url

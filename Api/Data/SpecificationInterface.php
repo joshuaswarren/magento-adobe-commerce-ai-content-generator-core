@@ -15,6 +15,7 @@ interface SpecificationInterface
     public const MIN_LENGTH = 'min_length';
     public const MAX_LENGTH = 'max_length';
     public const STORE_ID = 'store_id';
+    public const NUMBER = 'number';
 
     /**
      * @return string
@@ -81,4 +82,15 @@ interface SpecificationInterface
      * @return void
      */
     public function setStoreId(int $id): void;
+
+    /**
+     * @return int
+     */
+    public function getNumber(): int;
+
+    /**
+     * @param int $number
+     * @return void
+     */
+    public function setNumber(int $number): void;
 }

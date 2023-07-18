@@ -39,7 +39,7 @@ class GenerateContentTest extends TestCase
             ->with(['data' => ['input' => $prompt]])
             ->willReturn($apiRequest);
         $apiResponse = $this->createMock(AIResponseInterface::class);
-        $apiResponse->expects($this->once())->method('getContent')->willReturn($content);
+        $apiResponse->expects($this->once())->method('getChoices')->willReturn($content);
         $provider = $this->createMock(AIProviderInterface::class);
         $provider->expects($this->once())->method('call')->with($apiRequest)->willReturn($apiResponse);
         $this->provider->expects($this->once())->method('execute')->with($storeId)->willReturn($provider);

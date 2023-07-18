@@ -9,13 +9,13 @@ use Magento\Framework\DataObject;
 
 class AIResponse extends DataObject implements AIResponseInterface
 {
-    public function getContent(): string
+    public function getChoices(): array
     {
-        return (string) $this->getData(self::CONTENT_FIELD);
+        return (array) $this->getData(self::CHOICES_FIELD);
     }
 
-    public function setContent(string $content): void
+    public function setChoices(string $content): void
     {
-        $this->setData(self::CONTENT_FIELD, $content);
+        $this->setData(self::CHOICES_FIELD, $content);
     }
 }

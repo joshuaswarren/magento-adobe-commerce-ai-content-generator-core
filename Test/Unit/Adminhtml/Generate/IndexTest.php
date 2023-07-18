@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Creatuity\AIContent\Test\Unit\Adminhtml\Generate;
 
+use Creatuity\AIContent\Api\Data\AIResponseInterface;
 use Creatuity\AIContent\Api\Data\SpecificationInterface;
 use Creatuity\AIContent\Controller\Adminhtml\Generate\Index;
 use Creatuity\AIContent\Model\RequestProcessor;
@@ -42,11 +43,13 @@ class IndexTest extends TestCase
             SpecificationInterface::CONTENT_TYPE => 'description',
             SpecificationInterface::PRODUCT_ATTRIBUTES => []
         ];
-        $generatedText = 'some text';
+        $generatedText = ['text 1', 'text 2'];
+        $apiResponse = $this->createMock(AIResponseInterface::class);
+        $apiResponse->expects($this->once())->method('getChoices')->willReturn($generatedText);
         $json = $this->createMock(Json::class);
         $this->request->expects($this->once())->method('getParam')->with('specification', [])->willReturn($params);
-        $this->requestProcessor->expects($this->once())->method('execute')->with($params)->willReturn($generatedText);
-        $json->expects($this->once())->method('setData')->with(['success' => true, 'text' => $generatedText]);
+        $this->requestProcessor->expects($this->once())->method('execute')->with($params)->willReturn($apiResponse);
+        $json->expects($this->once())->method('setData')->with(['success' => true, 'choices' => $generatedText]);
         $this->jsonResultFactory->expects($this->once())->method('create')->willReturn($json);
         $index = new Index(
             $this->context,

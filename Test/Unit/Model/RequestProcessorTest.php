@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Creatuity\AIContent\Test\Unit\Model;
 
 use Creatuity\AIContent\Api\AIContentGeneratorInterface;
+use Creatuity\AIContent\Api\Data\AIResponseInterface;
 use Creatuity\AIContent\Api\Data\SpecificationInterface;
 use Creatuity\AIContent\Model\RequestProcessor;
 use Creatuity\AIContent\Model\SpecificationHydrator;
@@ -36,7 +37,7 @@ class RequestProcessorTest extends TestCase
             ->method('hydrate')
             ->with($params)
             ->willReturn($specification);
-        $expected = 'Some text';
+        $expected = $this->createMock(AIResponseInterface::class);
         $this->AIContentGenerator->expects($this->once())->method('execute')->with($specification)->willReturn($expected);
         $object = new RequestProcessor($this->AIContentGenerator, $this->specificationHydrator);
         $this->assertSame($expected, $object->execute($params));

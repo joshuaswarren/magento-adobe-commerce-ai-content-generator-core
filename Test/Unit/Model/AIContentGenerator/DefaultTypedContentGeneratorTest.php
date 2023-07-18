@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Creatuity\AIContent\Test\Unit\Model\AIContentGenerator;
 
+use Creatuity\AIContent\Api\Data\AIResponseInterface;
 use Creatuity\AIContent\Api\Data\SpecificationInterface;
 use Creatuity\AIContent\Exception\UnsupportedContentTypeException;
 use Creatuity\AIContent\Model\AIContentGenerator\DefaultTypedContentGenerator;
@@ -30,12 +31,12 @@ class DefaultTypedContentGeneratorTest extends TestCase
     {
         $specification = $this->mockSpecification($type);
         $prompt = 'Some prompt';
-        $content = 'Some generated content';
+        $apiResponse = $this->createMock(AIResponseInterface::class);
         $this->preparePrompt->expects($this->once())->method('generate')->with($specification, $promptTemplate)->willReturn($prompt);
-        $this->generateContent->expects($this->once())->method('execute')->with($prompt)->willReturn($content);
+        $this->generateContent->expects($this->once())->method('execute')->with($prompt)->willReturn($apiResponse);
         $object = $this->getObject($type, $promptTemplate);
         $result = $object->execute($specification);
-        $this->assertSame($content, $result);
+        $this->assertSame($apiResponse, $result);
     }
 
     /**
@@ -46,12 +47,12 @@ class DefaultTypedContentGeneratorTest extends TestCase
         $attrs = ['color', 'size'];
         $specification = $this->mockSpecification($type, $attrs);
         $prompt = 'Some prompt';
-        $content = 'Some generated content';
+        $apiResponse = $this->createMock(AIResponseInterface::class);
         $this->preparePrompt->expects($this->once())->method('generate')->with($specification, $promptTemplate)->willReturn($prompt);
-        $this->generateContent->expects($this->once())->method('execute')->with($prompt)->willReturn($content);
+        $this->generateContent->expects($this->once())->method('execute')->with($prompt)->willReturn($apiResponse);
         $object = $this->getObject($type, $promptTemplate, $attrs);
         $result = $object->execute($specification);
-        $this->assertSame($content, $result);
+        $this->assertSame($apiResponse, $result);
     }
 
     /**

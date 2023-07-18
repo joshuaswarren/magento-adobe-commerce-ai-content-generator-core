@@ -28,7 +28,7 @@ class DefaultTypedContentGenerator implements AITypedContentGeneratorInterface
             );
         }
 
-        if ($this->attributes) {
+        if ($this->attributes && !$specification->getProductAttributes()) {
             $specification->setProductAttributes($this->attributes);
         }
 

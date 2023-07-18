@@ -10,6 +10,7 @@ class AiContentGeneralConfig
 {
     private const XML_PATH_AICONTENT_ENABLED = 'creatuityaicontent/general/enabled';
     private const XML_PATH_DESC_ATTRS = 'creatuityaicontent/general/product_description_attributes';
+    private const XML_PATH_METATAGS_ATTRS = 'creatuityaicontent/general/product_meta_tags_attributes';
     private const XML_PATH_AI_PROVIDER = 'creatuityaicontent/general/aiprovider';
 
     public function __construct(
@@ -43,6 +44,19 @@ class AiContentGeneralConfig
     {
         $val = (string) $this->scopeConfig->getValue(
             self::XML_PATH_DESC_ATTRS,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+
+        $attrs = explode(',', $val);
+
+        return array_map('trim', $attrs);
+    }
+
+    public function getMetaAttributes(?int $storeId = null): array
+    {
+        $val = (string) $this->scopeConfig->getValue(
+            self::XML_PATH_METATAGS_ATTRS,
             ScopeInterface::SCOPE_STORE,
             $storeId
         );

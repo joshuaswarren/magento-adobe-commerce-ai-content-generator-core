@@ -42,6 +42,20 @@ define([
             }
         },
 
+        getProductAttributes: function () {
+            try {
+                const productAttributesIndex = this.containers[0].containers[0].name + '.product_attributes_container.product_attributes';
+                const input = uiRegistry.get(productAttributesIndex);
+                if (input && input.value()) {
+                    return input.value();
+                }
+            } catch (e) {
+                console.error(e);
+            }
+
+            return [];
+        },
+
         fillProxyField: function (data) {
             const destinations = typeof this.destination === 'object' ? this.destination : [this.destination];
             let choices = data.choices;
@@ -130,7 +144,7 @@ define([
                     "specification": {
                         "content_type": type,
                         "product_id": this.productId(),
-                        "product_attributes": [],
+                        "product_attributes": this.getProductAttributes(),
                         "min_length": this.getMinLength(),
                         "max_length": this.getMaxLength(),
                         "store_id": this.storeId(),

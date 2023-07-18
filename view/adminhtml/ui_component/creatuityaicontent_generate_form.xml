@@ -187,6 +187,11 @@
                 <label translate="true">Meta Tags</label>
                 <collapsible>true</collapsible>
             </settings>
+            <container name="meta_tags_info">
+                <htmlContent name="meta_tags_info_html">
+                    <block name="meta_tags_info_block" template="Creatuity_AIContent::meta-tags-info.phtml" />
+                </htmlContent>
+            </container>
             <container name="meta_title_1_container"
                        template="Creatuity_AIContent/group/group"
                        component="Magento_Ui/js/form/components/group">

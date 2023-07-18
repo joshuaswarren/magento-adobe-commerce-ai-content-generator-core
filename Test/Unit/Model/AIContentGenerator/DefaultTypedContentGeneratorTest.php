@@ -96,18 +96,6 @@ class DefaultTypedContentGeneratorTest extends TestCase
         $this->assertSame($expected, $this->getObject($type, 'Some text')->isApplicable($typeToCompare));
     }
 
-    private function mockSpecification(string $contentType, array $attributes = []): SpecificationInterface|MockObject
-    {
-
-        if ($attributes) {
-            $specification->expects($this->once())->method('setProductAttributes')->with($attributes);
-        } else {
-            $specification->expects($this->never())->method('setProductAttributes');
-        }
-
-        return $specification;
-    }
-
     private function isApplicableDataProvider(): array
     {
         return [

@@ -6,7 +6,16 @@ namespace Creatuity\AIContent\Api\Data;
 
 interface AIResponseInterface
 {
-    public const CONTENT_FIELD = 'content';
+    public const CHOICES_FIELD = 'choices';
 
-    public function getContent(): string;
+    /**
+     * @return string[]
+     */
+    public function getChoices(): array;
+
+    /**
+     * @param string[] $choices
+     * @return void
+     */
+    public function setChoices(string $choices): void;
 }

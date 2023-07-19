@@ -33,7 +33,9 @@ class Index extends Action implements HttpPostActionInterface
         try {
             $jsonResult->setData([
                 'success' => true,
-                'text' => $this->requestProcessor->execute($this->request->getParam('specification', []))
+                'choices' => $this->requestProcessor
+                    ->execute($this->request->getParam('specification', []))
+                    ->getChoices()
             ]);
         } catch (LocalizedException $e) {
             return $this->returnError((string) $e->getMessage());

@@ -6,6 +6,7 @@ namespace Creatuity\AIContent\Model;
 
 use Creatuity\AIContent\Api\AIContentGeneratorInterface;
 use Creatuity\AIContent\Api\AITypedContentGeneratorInterface;
+use Creatuity\AIContent\Api\Data\AIResponseInterface;
 use Creatuity\AIContent\Api\Data\SpecificationInterface;
 use Creatuity\AIContent\Exception\ContentGeneratorNotFoundException;
 use Magento\Framework\Exception\LocalizedException;
@@ -20,7 +21,7 @@ class AIContentGenerator implements AIContentGeneratorInterface
     ) {
     }
 
-    public function execute(SpecificationInterface $specification): string
+    public function execute(SpecificationInterface $specification): AIResponseInterface
     {
         foreach ($this->typedGenerators as $generator) {
             if (!$generator instanceof AITypedContentGeneratorInterface) {

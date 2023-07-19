@@ -43,6 +43,36 @@
                 <label translate="true">Description</label>
                 <collapsible>true</collapsible>
             </settings>
+            <container name="product_attributes_container" component="Magento_Ui/js/form/components/group">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="formElement" xsi:type="string">container</item>
+                        <item name="breakLine" xsi:type="boolean">false</item>
+                    </item>
+                </argument>
+                <field name="product_attributes" formElement="multiselect">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="service" xsi:type="array">
+                                <item name="template" xsi:type="string">ui/form/element/helper/service</item>
+                            </item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <dataScope>product_description_attributes</dataScope>
+                        <label translate="true">Product Attributes</label>
+                        <notice translate="true">Select product attributes that you'd like to use to generate descriptions</notice>
+                        <disabled>true</disabled>
+                    </settings>
+                    <formElements>
+                        <multiselect>
+                            <settings>
+                                <options class="Creatuity\AIContent\Model\Config\Source\DescriptionAttributesOptionSource"/>
+                            </settings>
+                        </multiselect>
+                    </formElements>
+                </field>
+            </container>
             <container name="short_description_container" component="Magento_Ui/js/form/components/group">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
@@ -181,25 +211,56 @@
                 </button>
             </container>
         </fieldset>
+
         <fieldset name="meta_tags" class="Creatuity\AIContent\Ui\Component\Form\Fieldset" sortOrder="20">
             <settings>
                 <label translate="true">Meta Tags</label>
                 <collapsible>true</collapsible>
-
             </settings>
-            <container name="meta_title_container" component="Magento_Ui/js/form/components/group">
+            <container name="meta_tags_info">
+                <htmlContent name="meta_tags_info_html">
+                    <block name="meta_tags_info_block" template="Creatuity_AIContent::meta-tags-info.phtml" />
+                </htmlContent>
+            </container>
+            <container name="product_attributes_container" component="Magento_Ui/js/form/components/group">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="formElement" xsi:type="string">container</item>
                         <item name="breakLine" xsi:type="boolean">false</item>
                     </item>
                 </argument>
-                <field name="meta_title" formElement="textarea">
+                <field name="product_attributes" formElement="multiselect">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="service" xsi:type="array">
+                                <item name="template" xsi:type="string">ui/form/element/helper/service</item>
+                            </item>
+                        </item>
+                    </argument>
                     <settings>
-                        <dataType>text</dataType>
-                        <label translate="true">Meta Title</label>
+                        <dataScope>product_meta_tags_attributes</dataScope>
+                        <label translate="true">Product Attributes</label>
+                        <notice translate="true">Select product attributes that you'd like to use to generate meta tags data</notice>
+                        <disabled>true</disabled>
                     </settings>
+                    <formElements>
+                        <multiselect>
+                            <settings>
+                                <options class="Creatuity\AIContent\Model\Config\Source\DescriptionAttributesOptionSource"/>
+                            </settings>
+                        </multiselect>
+                    </formElements>
                 </field>
+            </container>
+            <container name="meta_title_1_container"
+                       template="Creatuity_AIContent/group/group"
+                       component="Magento_Ui/js/form/components/group">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="formElement" xsi:type="string">container</item>
+                        <item name="breakLine" xsi:type="boolean">false</item>
+                    </item>
+                </argument>
                 <button name="meta_title_generate_btn"
                         class="Creatuity\AIContent\Ui\Component\Form\Control\Button"
                         component="Creatuity_AIContent/js/product/form/component/generate-ai-content-button"
@@ -210,48 +271,151 @@
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
                             <item name="additionalForGroup" xsi:type="boolean">true</item>
-                            <item name="additionalClasses" xsi:type="string">admin__field-small admin__button-aicontent-form</item>
+                            <item name="label" xsi:type="string">Meta Title</item>
+                            <item name="labelVisible" xsi:type="boolean">true</item>
+                            <item name="displayArea" xsi:type="string">insideGroup</item>
+                            <item name="additionalClasses" xsi:type="string">admin__field-small display-block no-margin</item>
                             <item name="aiContentType" xsi:type="string">meta-title</item>
+                            <item name="number" xsi:type="number">3</item>
                             <item name="reference" xsi:type="string">product_form.product_form.search-engine-optimization.container_meta_title.meta_title</item>
-                            <item name="destination" xsi:type="string">ns = ${ $.ns }, index=meta_title</item>
+                            <item name="destination" xsi:type="array">
+                                <item name="meta_title_1" xsi:type="string">ns = ${ $.ns }, index=meta_title_1</item>
+                                <item name="meta_title_2" xsi:type="string">ns = ${ $.ns }, index=meta_title_2</item>
+                                <item name="meta_title_3" xsi:type="string">ns = ${ $.ns }, index=meta_title_3</item>
+                            </item>
                             <item name="applyBtn" xsi:type="string">ns = ${ $.ns }, index=meta_title_apply_btn</item>
                         </item>
                     </argument>
                 </button>
-                <button name="meta_title_apply_btn"
+                <field name="meta_title_1" formElement="textarea">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="applyBtn" xsi:type="string">ns = ${ $.ns }, index=meta_title_1_apply_btn</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <dataType>text</dataType>
+                        <label />
+                        <visible>false</visible>
+                        <additionalClasses>
+                            <class name="display-block">true</class>
+                            <class name="no-padding">true</class>
+                        </additionalClasses>
+                    </settings>
+                </field>
+                <button name="meta_title_1_apply_btn"
                         component="Creatuity_AIContent/js/product/form/component/apply-ai-content-button"
                         template="ui/form/components/button/container">
                     <settings>
                         <title translate="true">Apply</title>
+                        <visible>false</visible>
                     </settings>
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
                             <item name="additionalForGroup" xsi:type="boolean">true</item>
-                            <item name="additionalClasses" xsi:type="string">admin__field-small admin__button-aicontent-form margin-left-10</item>
+                            <item name="additionalClasses" xsi:type="string">admin__field-small display-block</item>
                             <item name="buttonClasses" xsi:type="string">action-primary</item>
                             <item name="disabled" xsi:type="boolean">true</item>
                             <item name="aiContentType" xsi:type="string">meta-title</item>
                             <item name="destination" xsi:type="string">product_form.product_form.search-engine-optimization.container_meta_title.meta_title</item>
-                            <item name="sourceField" xsi:type="string">ns = ${ $.ns }, index=meta_title</item>
+                            <item name="sourceField" xsi:type="string">ns = ${ $.ns }, index=meta_title_1</item>
+                            <item name="destinationFieldTitle" xsi:type="string">Meta Title</item>
+                        </item>
+                    </argument>
+                </button>
+            </container>
+            <container name="meta_title_2_container" component="Magento_Ui/js/form/components/group">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="formElement" xsi:type="string">container</item>
+                        <item name="breakLine" xsi:type="boolean">false</item>
+                        <item name="visible" xsi:type="boolean">false</item>
+                    </item>
+                </argument>
+                <field name="meta_title_2" formElement="textarea">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="applyBtn" xsi:type="string">ns = ${ $.ns }, index=meta_title_2_apply_btn</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <dataType>text</dataType>
+                        <label />
+                        <visible>false</visible>
+                    </settings>
+                </field>
+                <button name="meta_title_2_apply_btn"
+                        component="Creatuity_AIContent/js/product/form/component/apply-ai-content-button"
+                        template="ui/form/components/button/container">
+                    <settings>
+                        <title translate="true">Apply</title>
+                        <visible>false</visible>
+                    </settings>
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="additionalForGroup" xsi:type="boolean">true</item>
+                            <item name="additionalClasses" xsi:type="string">admin__field-small</item>
+                            <item name="buttonClasses" xsi:type="string">action-primary</item>
+                            <item name="disabled" xsi:type="boolean">true</item>
+                            <item name="aiContentType" xsi:type="string">meta-title</item>
+                            <item name="destination" xsi:type="string">product_form.product_form.search-engine-optimization.container_meta_title.meta_title</item>
+                            <item name="sourceField" xsi:type="string">ns = ${ $.ns }, index=meta_title_2</item>
+                            <item name="destinationFieldTitle" xsi:type="string">Meta Title</item>
+                        </item>
+                    </argument>
+                </button>
+            </container>
+            <container name="meta_title_3_container" component="Magento_Ui/js/form/components/group">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="formElement" xsi:type="string">container</item>
+                        <item name="breakLine" xsi:type="boolean">false</item>
+                        <item name="visible" xsi:type="boolean">false</item>
+                    </item>
+                </argument>
+                <field name="meta_title_3" formElement="textarea">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="applyBtn" xsi:type="string">ns = ${ $.ns }, index=meta_title_3_apply_btn</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <dataType>text</dataType>
+                        <label />
+                        <visible>false</visible>
+                    </settings>
+                </field>
+                <button name="meta_title_3_apply_btn"
+                        component="Creatuity_AIContent/js/product/form/component/apply-ai-content-button"
+                        template="ui/form/components/button/container">
+                    <settings>
+                        <title translate="true">Apply</title>
+                        <visible>false</visible>
+                    </settings>
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="additionalForGroup" xsi:type="boolean">true</item>
+                            <item name="additionalClasses" xsi:type="string">admin__field-small</item>
+                            <item name="buttonClasses" xsi:type="string">action-primary</item>
+                            <item name="disabled" xsi:type="boolean">true</item>
+                            <item name="aiContentType" xsi:type="string">meta-title</item>
+                            <item name="destination" xsi:type="string">product_form.product_form.search-engine-optimization.container_meta_title.meta_title</item>
+                            <item name="sourceField" xsi:type="string">ns = ${ $.ns }, index=meta_title_3</item>
                             <item name="destinationFieldTitle" xsi:type="string">Meta Title</item>
                         </item>
                     </argument>
                 </button>
             </container>
 
-            <container name="meta_keywords_container" component="Magento_Ui/js/form/components/group">
+            <container name="meta_keywords_1_container"
+                       template="Creatuity_AIContent/group/group"
+                       component="Magento_Ui/js/form/components/group">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="formElement" xsi:type="string">container</item>
                         <item name="breakLine" xsi:type="boolean">false</item>
                     </item>
                 </argument>
-                <field name="meta_keywords" formElement="textarea">
-                    <settings>
-                        <dataType>text</dataType>
-                        <label translate="true">Meta Keywords</label>
-                    </settings>
-                </field>
                 <button name="meta_keywords_generate_btn"
                         class="Creatuity\AIContent\Ui\Component\Form\Control\Button"
                         component="Creatuity_AIContent/js/product/form/component/generate-ai-content-button"
@@ -261,16 +425,122 @@
                     </settings>
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
+                            <item name="label" xsi:type="string">Meta Keywords</item>
+                            <item name="labelVisible" xsi:type="boolean">true</item>
+                            <item name="displayArea" xsi:type="string">insideGroup</item>
+                            <item name="number" xsi:type="number">3</item>
                             <item name="additionalForGroup" xsi:type="boolean">true</item>
-                            <item name="additionalClasses" xsi:type="string">admin__field-small admin__button-aicontent-form</item>
+                            <item name="additionalClasses" xsi:type="string">admin__field-small display-block no-margin</item>
                             <item name="aiContentType" xsi:type="string">meta-keywords</item>
                             <item name="reference" xsi:type="string">product_form.product_form.search-engine-optimization.container_meta_keyword.meta_keyword</item>
-                            <item name="destination" xsi:type="string">ns = ${ $.ns }, index=meta_keywords</item>
+                            <item name="destination" xsi:type="array">
+                                <item name="meta_keywords_1" xsi:type="string">ns = ${ $.ns }, index=meta_keywords_1</item>
+                                <item name="meta_keywords_2" xsi:type="string">ns = ${ $.ns }, index=meta_keywords_2</item>
+                                <item name="meta_keywords_3" xsi:type="string">ns = ${ $.ns }, index=meta_keywords_3</item>
+                            </item>
                             <item name="applyBtn" xsi:type="string">ns = ${ $.ns }, index=meta_keywords_apply_btn</item>
                         </item>
                     </argument>
                 </button>
-                <button name="meta_keywords_apply_btn"
+                <field name="meta_keywords_1" formElement="textarea">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="applyBtn" xsi:type="string">ns = ${ $.ns }, index=meta_keywords_1_apply_btn</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <dataType>text</dataType>
+                        <label />
+                        <visible>false</visible>
+                        <additionalClasses>
+                            <class name="display-block">true</class>
+                            <class name="no-padding">true</class>
+                        </additionalClasses>
+                    </settings>
+                </field>
+                <button name="meta_keywords_1_apply_btn"
+                        component="Creatuity_AIContent/js/product/form/component/apply-ai-content-button"
+                        template="ui/form/components/button/container">
+                    <settings>
+                        <title translate="true">Apply</title>
+                        <visible>false</visible>
+                    </settings>
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="additionalForGroup" xsi:type="boolean">true</item>
+                            <item name="additionalClasses" xsi:type="string">admin__field-small display-block</item>
+                            <item name="buttonClasses" xsi:type="string">action-primary</item>
+                            <item name="disabled" xsi:type="boolean">true</item>
+                            <item name="aiContentType" xsi:type="string">meta-keywords</item>
+                            <item name="destination" xsi:type="string">product_form.product_form.search-engine-optimization.container_meta_keyword.meta_keyword</item>
+                            <item name="sourceField" xsi:type="string">ns = ${ $.ns }, index=meta_keywords_1</item>
+                            <item name="destinationFieldTitle" xsi:type="string">Meta Keywords</item>
+                        </item>
+                    </argument>
+                </button>
+            </container>
+            <container name="meta_keywords_2_container" component="Magento_Ui/js/form/components/group">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="formElement" xsi:type="string">container</item>
+                        <item name="breakLine" xsi:type="boolean">false</item>
+                        <item name="visible" xsi:type="boolean">false</item>
+                    </item>
+                </argument>
+                <field name="meta_keywords_2" formElement="textarea">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="applyBtn" xsi:type="string">ns = ${ $.ns }, index=meta_keywords_2_apply_btn</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <dataType>text</dataType>
+                        <label />
+                        <visible>false</visible>
+                    </settings>
+                </field>
+                <button name="meta_keywords_2_apply_btn"
+                        component="Creatuity_AIContent/js/product/form/component/apply-ai-content-button"
+                        template="ui/form/components/button/container">
+                    <settings>
+                        <title translate="true">Apply</title>
+                        <visible>false</visible>
+                    </settings>
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="additionalForGroup" xsi:type="boolean">true</item>
+                            <item name="additionalClasses" xsi:type="string">admin__field-small</item>
+                            <item name="buttonClasses" xsi:type="string">action-primary</item>
+                            <item name="disabled" xsi:type="boolean">true</item>
+                            <item name="aiContentType" xsi:type="string">meta-keywords</item>
+                            <item name="destination" xsi:type="string">product_form.product_form.search-engine-optimization.container_meta_keyword.meta_keyword</item>
+                            <item name="sourceField" xsi:type="string">ns = ${ $.ns }, index=meta_keywords_2</item>
+                            <item name="destinationFieldTitle" xsi:type="string">Meta Keywords</item>
+                        </item>
+                    </argument>
+                </button>
+            </container>
+            <container name="meta_keywords_3_container" component="Magento_Ui/js/form/components/group">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="formElement" xsi:type="string">container</item>
+                        <item name="breakLine" xsi:type="boolean">false</item>
+                        <item name="visible" xsi:type="boolean">false</item>
+                    </item>
+                </argument>
+                <field name="meta_keywords_3" formElement="textarea">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="applyBtn" xsi:type="string">ns = ${ $.ns }, index=meta_keywords_3_apply_btn</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <dataType>text</dataType>
+                        <label />
+                        <visible>false</visible>
+                    </settings>
+                </field>
+                <button name="meta_keywords_3_apply_btn"
                         component="Creatuity_AIContent/js/product/form/component/apply-ai-content-button"
                         template="ui/form/components/button/container">
                     <settings>
@@ -279,32 +549,27 @@
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
                             <item name="additionalForGroup" xsi:type="boolean">true</item>
-                            <item name="additionalClasses" xsi:type="string">admin__field-small admin__button-aicontent-form margin-left-10</item>
+                            <item name="additionalClasses" xsi:type="string">admin__field-small</item>
                             <item name="buttonClasses" xsi:type="string">action-primary</item>
                             <item name="disabled" xsi:type="boolean">true</item>
                             <item name="aiContentType" xsi:type="string">meta-keywords</item>
                             <item name="destination" xsi:type="string">product_form.product_form.search-engine-optimization.container_meta_keyword.meta_keyword</item>
-                            <item name="sourceField" xsi:type="string">ns = ${ $.ns }, index=meta_keywords</item>
+                            <item name="sourceField" xsi:type="string">ns = ${ $.ns }, index=meta_keywords_3</item>
                             <item name="destinationFieldTitle" xsi:type="string">Meta Keywords</item>
                         </item>
                     </argument>
                 </button>
-
             </container>
 
-            <container name="meta_description_container" component="Magento_Ui/js/form/components/group">
+            <container name="meta_description_1_container"
+                       template="Creatuity_AIContent/group/group"
+                       component="Magento_Ui/js/form/components/group">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="formElement" xsi:type="string">container</item>
                         <item name="breakLine" xsi:type="boolean">false</item>
                     </item>
                 </argument>
-                <field name="meta_description" formElement="textarea">
-                    <settings>
-                        <dataType>text</dataType>
-                        <label translate="true">Meta Description</label>
-                    </settings>
-                </field>
                 <button name="meta_description_generate_btn"
                         class="Creatuity\AIContent\Ui\Component\Form\Control\Button"
                         component="Creatuity_AIContent/js/product/form/component/generate-ai-content-button"
@@ -315,15 +580,80 @@
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
                             <item name="additionalForGroup" xsi:type="boolean">true</item>
-                            <item name="additionalClasses" xsi:type="string">admin__field-small admin__button-aicontent-form</item>
+                            <item name="label" xsi:type="string">Meta Description</item>
+                            <item name="labelVisible" xsi:type="boolean">true</item>
+                            <item name="displayArea" xsi:type="string">insideGroup</item>
+                            <item name="number" xsi:type="number">3</item>
+                            <item name="additionalClasses" xsi:type="string">admin__field-small display-block no-margin</item>
                             <item name="aiContentType" xsi:type="string">meta-description</item>
                             <item name="reference" xsi:type="string">product_form.product_form.search-engine-optimization.container_meta_description.meta_description</item>
-                            <item name="destination" xsi:type="string">ns = ${ $.ns }, index=meta_description</item>
+                            <item name="destination" xsi:type="array">
+                                <item name="meta_description_1" xsi:type="string">ns = ${ $.ns }, index=meta_description_1</item>
+                                <item name="meta_description_2" xsi:type="string">ns = ${ $.ns }, index=meta_description_2</item>
+                                <item name="meta_description_3" xsi:type="string">ns = ${ $.ns }, index=meta_description_3</item>
+                            </item>
                             <item name="applyBtn" xsi:type="string">ns = ${ $.ns }, index=meta_description_apply_btn</item>
                         </item>
                     </argument>
                 </button>
-                <button name="meta_description_apply_btn"
+                <field name="meta_description_1" formElement="textarea">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="applyBtn" xsi:type="string">ns = ${ $.ns }, index=meta_description_1_apply_btn</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <dataType>text</dataType>
+                        <label />
+                        <visible>false</visible>
+                        <additionalClasses>
+                            <class name="display-block">true</class>
+                            <class name="no-padding">true</class>
+                        </additionalClasses>
+                    </settings>
+                </field>
+                <button name="meta_description_1_apply_btn"
+                        component="Creatuity_AIContent/js/product/form/component/apply-ai-content-button"
+                        template="ui/form/components/button/container">
+                    <settings>
+                        <title translate="true">Apply</title>
+                        <visible>false</visible>
+                    </settings>
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="additionalForGroup" xsi:type="boolean">true</item>
+                            <item name="additionalClasses" xsi:type="string">admin__field-small display-block</item>
+                            <item name="buttonClasses" xsi:type="string">action-primary</item>
+                            <item name="disabled" xsi:type="boolean">true</item>
+                            <item name="aiContentType" xsi:type="string">meta-description</item>
+                            <item name="destination" xsi:type="string">product_form.product_form.search-engine-optimization.container_meta_description.meta_description</item>
+                            <item name="sourceField" xsi:type="string">ns = ${ $.ns }, index=meta_description_1</item>
+                            <item name="destinationFieldTitle" xsi:type="string">Meta Description</item>
+                        </item>
+                    </argument>
+                </button>
+            </container>
+            <container name="meta_description_2_container" component="Magento_Ui/js/form/components/group">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="formElement" xsi:type="string">container</item>
+                        <item name="breakLine" xsi:type="boolean">false</item>
+                        <item name="visible" xsi:type="boolean">false</item>
+                    </item>
+                </argument>
+                <field name="meta_description_2" formElement="textarea">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="applyBtn" xsi:type="string">ns = ${ $.ns }, index=meta_description_2_apply_btn</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <dataType>text</dataType>
+                        <label />
+                        <visible>false</visible>
+                    </settings>
+                </field>
+                <button name="meta_description_2_apply_btn"
                         component="Creatuity_AIContent/js/product/form/component/apply-ai-content-button"
                         template="ui/form/components/button/container">
                     <settings>
@@ -332,12 +662,52 @@
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
                             <item name="additionalForGroup" xsi:type="boolean">true</item>
-                            <item name="additionalClasses" xsi:type="string">admin__field-small admin__button-aicontent-form margin-left-10</item>
+                            <item name="additionalClasses" xsi:type="string">admin__field-small</item>
                             <item name="buttonClasses" xsi:type="string">action-primary</item>
                             <item name="disabled" xsi:type="boolean">true</item>
                             <item name="aiContentType" xsi:type="string">meta-description</item>
                             <item name="destination" xsi:type="string">product_form.product_form.search-engine-optimization.container_meta_description.meta_description</item>
-                            <item name="sourceField" xsi:type="string">ns = ${ $.ns }, index=meta_description</item>
+                            <item name="sourceField" xsi:type="string">ns = ${ $.ns }, index=meta_description_2</item>
+                            <item name="destinationFieldTitle" xsi:type="string">Meta Description</item>
+                        </item>
+                    </argument>
+                </button>
+            </container>
+            <container name="meta_description_3_container" component="Magento_Ui/js/form/components/group">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="formElement" xsi:type="string">container</item>
+                        <item name="breakLine" xsi:type="boolean">false</item>
+                        <item name="visible" xsi:type="boolean">false</item>
+                    </item>
+                </argument>
+                <field name="meta_description_3" formElement="textarea">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="applyBtn" xsi:type="string">ns = ${ $.ns }, index=meta_description_3_apply_btn</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <dataType>text</dataType>
+                        <label />
+                        <visible>false</visible>
+                    </settings>
+                </field>
+                <button name="meta_description_3_apply_btn"
+                        component="Creatuity_AIContent/js/product/form/component/apply-ai-content-button"
+                        template="ui/form/components/button/container">
+                    <settings>
+                        <title translate="true">Apply</title>
+                    </settings>
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="additionalForGroup" xsi:type="boolean">true</item>
+                            <item name="additionalClasses" xsi:type="string">admin__field-small</item>
+                            <item name="buttonClasses" xsi:type="string">action-primary</item>
+                            <item name="disabled" xsi:type="boolean">true</item>
+                            <item name="aiContentType" xsi:type="string">meta-description</item>
+                            <item name="destination" xsi:type="string">product_form.product_form.search-engine-optimization.container_meta_description.meta_description</item>
+                            <item name="sourceField" xsi:type="string">ns = ${ $.ns }, index=meta_description_3</item>
                             <item name="destinationFieldTitle" xsi:type="string">Meta Description</item>
                         </item>
                     </argument>

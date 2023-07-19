@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Creatuity\AIContent\Test\Unit\Model\AIContentGenerator;
 
+use Creatuity\AIContent\Api\Data\AIResponseInterface;
 use Creatuity\AIContent\Api\Data\SpecificationInterface;
 use Creatuity\AIContent\Exception\UnsupportedContentTypeException;
 use Creatuity\AIContent\Model\AIContentGenerator\DefaultTypedContentGenerator;
@@ -26,32 +27,41 @@ class DefaultTypedContentGeneratorTest extends TestCase
     /**
      * @dataProvider executeDataProvider
      */
-    public function testExecuteNoAttributes(string $type, string $promptTemplate): void
+    public function testExecuteNoSpecificationAttributes(string $type, string $promptTemplate): void
     {
-        $specification = $this->mockSpecification($type);
+        $attrs = ['color', 'size'];
+        $specAttributes = [];
+        $specification = $this->createMock(SpecificationInterface::class);
+        $specification->expects($this->atLeast(1))->method('getContentType')->willReturn($type);
+        $specification->expects($this->once())->method('getProductAttributes')->willReturn($specAttributes);
+        $specification->expects($this->once())->method('setProductAttributes');
         $prompt = 'Some prompt';
-        $content = 'Some generated content';
+        $apiResponse = $this->createMock(AIResponseInterface::class);
         $this->preparePrompt->expects($this->once())->method('generate')->with($specification, $promptTemplate)->willReturn($prompt);
-        $this->generateContent->expects($this->once())->method('execute')->with($prompt)->willReturn($content);
-        $object = $this->getObject($type, $promptTemplate);
+        $this->generateContent->expects($this->once())->method('execute')->with($prompt)->willReturn($apiResponse);
+        $object = $this->getObject($type, $promptTemplate, $attrs);
         $result = $object->execute($specification);
-        $this->assertSame($content, $result);
+        $this->assertSame($apiResponse, $result);
     }
 
     /**
      * @dataProvider executeDataProvider
      */
-    public function testExecuteWithAttributes(string $type, string $promptTemplate): void
+    public function testExecuteWithSpecificationAttributes(string $type, string $promptTemplate): void
     {
         $attrs = ['color', 'size'];
-        $specification = $this->mockSpecification($type, $attrs);
+        $specAttributes = ['color', 'size', 'name'];
+        $specification = $this->createMock(SpecificationInterface::class);
+        $specification->expects($this->atLeast(1))->method('getContentType')->willReturn($type);
+        $specification->expects($this->once())->method('getProductAttributes')->willReturn($specAttributes);
+        $specification->expects($this->never())->method('setProductAttributes');
         $prompt = 'Some prompt';
-        $content = 'Some generated content';
+        $apiResponse = $this->createMock(AIResponseInterface::class);
         $this->preparePrompt->expects($this->once())->method('generate')->with($specification, $promptTemplate)->willReturn($prompt);
-        $this->generateContent->expects($this->once())->method('execute')->with($prompt)->willReturn($content);
+        $this->generateContent->expects($this->once())->method('execute')->with($prompt)->willReturn($apiResponse);
         $object = $this->getObject($type, $promptTemplate, $attrs);
         $result = $object->execute($specification);
-        $this->assertSame($content, $result);
+        $this->assertSame($apiResponse, $result);
     }
 
     /**
@@ -60,7 +70,7 @@ class DefaultTypedContentGeneratorTest extends TestCase
     public function testExecuteExceptionExpected(string $type, string $promptTemplate): void
     {
         $this->expectException(UnsupportedContentTypeException::class);
-        $specification = $this->mockSpecification($type);
+        $specification = $this->createMock(SpecificationInterface::class);
         $this->preparePrompt->expects($this->never())->method('generate');
         $this->generateContent->expects($this->never())->method('execute');
         $this->getObject('other type', $promptTemplate)->execute($specification);
@@ -84,19 +94,6 @@ class DefaultTypedContentGeneratorTest extends TestCase
     public function testIsApplicable(string $type, string $typeToCompare, bool $expected): void
     {
         $this->assertSame($expected, $this->getObject($type, 'Some text')->isApplicable($typeToCompare));
-    }
-
-    private function mockSpecification(string $contentType, array $attributes = []): SpecificationInterface|MockObject
-    {
-        $specification = $this->createMock(SpecificationInterface::class);
-        $specification->expects($this->atLeast(1))->method('getContentType')->willReturn($contentType);
-        if ($attributes) {
-            $specification->expects($this->once())->method('setProductAttributes')->with($attributes);
-        } else {
-            $specification->expects($this->never())->method('setProductAttributes');
-        }
-
-        return $specification;
     }
 
     private function isApplicableDataProvider(): array

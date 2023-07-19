@@ -1,0 +1,21 @@
+<?php
+/**
+ * @var $block Magento\Backend\Block\Template
+ * @var $escaper \Magento\Framework\Escaper
+ */
+?>
+<div class="messages">
+    <div class="message message-notice">
+        <div>
+            <?= $escaper->escapeHtml(
+                    __(
+                        'Click generate button next to the corresponding META element. ' .
+                        'System will generate <strong>%1</strong> propositions. ' .
+                        'You will be able to edit them and apply the chosen one.',
+                        3
+                    ),
+                    ['strong']
+            ) ?>
+        </div>
+    </div>
+</div>

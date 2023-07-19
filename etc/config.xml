@@ -5,6 +5,7 @@
         <creatuityaicontent>
             <general>
                 <product_description_attributes>name,color,size</product_description_attributes>
+                <product_meta_tags_attributes>name,description</product_meta_tags_attributes>
             </general>
         </creatuityaicontent>
     </default>

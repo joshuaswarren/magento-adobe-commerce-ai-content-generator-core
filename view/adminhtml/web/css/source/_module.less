@@ -14,8 +14,18 @@
     }
 }
 
-.admin__fieldset-wrapper-content .admin__field-control .admin__field.display-block {
-    display: block;
+.admin__fieldset-wrapper-content .admin__field-control .admin__field {
+    &.display-block {
+        display: block;
+    }
+
+    &.no-margin {
+        margin: 0;
+    }
+
+    &.no-padding {
+        padding: 0;
+    }
 }
 
 .admin__fieldset-wrapper-content .admin__field-control .admin__field {

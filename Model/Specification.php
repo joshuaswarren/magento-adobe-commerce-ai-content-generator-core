@@ -77,4 +77,14 @@ class Specification extends DataObject implements SpecificationInterface
     {
         $this->setData(self::STORE_ID, $id);
     }
+
+    public function getNumber(): int
+    {
+        return max((int) $this->getData(self::NUMBER), 1);
+    }
+
+    public function setNumber(int $number): void
+    {
+        $this->setData(self::NUMBER, $number);
+    }
 }

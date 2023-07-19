@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Creatuity\AIContent\Model;
 
 use Creatuity\AIContent\Api\AIContentGeneratorInterface;
+use Creatuity\AIContent\Api\Data\AIResponseInterface;
 
 class RequestProcessor
 {
@@ -14,7 +15,7 @@ class RequestProcessor
     ) {
     }
 
-    public function execute(array $params): string
+    public function execute(array $params): AIResponseInterface
     {
         return $this->AIContentGenerator->execute(
             $this->specificationHydrator->hydrate($params)

@@ -26,6 +26,12 @@
                     <source_model>Creatuity\AIContent\Model\Config\Source\DescriptionAttributesOptionSource</source_model>
                     <validate>required-entry</validate>
                 </field>
+                <field id="product_meta_tags_attributes" translate="label comment" type="multiselect" sortOrder="30" showInStore="1" showInWebsite="1" showInDefault="1" canRestore="1">
+                    <label>Meta-Tags Attribute</label>
+                    <comment>Which attribute(s) should be used to generate meta-tags.</comment>
+                    <source_model>Creatuity\AIContent\Model\Config\Source\DescriptionAttributesOptionSource</source_model>
+                    <validate>required-entry</validate>
+                </field>
             </group>
         </section>
     </system>

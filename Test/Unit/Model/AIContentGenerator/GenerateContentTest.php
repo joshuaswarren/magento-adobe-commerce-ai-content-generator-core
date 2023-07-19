@@ -8,6 +8,7 @@ use Creatuity\AIContent\Api\AIProviderInterface;
 use Creatuity\AIContent\Api\Data\AIRequestInterface;
 use Creatuity\AIContent\Api\Data\AIRequestInterfaceFactory;
 use Creatuity\AIContent\Api\Data\AIResponseInterface;
+use Creatuity\AIContent\Api\Data\SpecificationInterface;
 use Creatuity\AIContent\Model\AIContentGenerator\GenerateContent;
 use Creatuity\AIContent\Model\GetAIProvider;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -30,7 +31,7 @@ class GenerateContentTest extends TestCase
     public function testExecute(): void
     {
         $storeId = 1;
-        $content = 'Some content';
+        $content = ['Some content'];
         $prompt = 'Some text';
         $apiRequest = $this->createMock(AIRequestInterface::class);
         $this->AIRequestInterfaceFactory
@@ -38,12 +39,13 @@ class GenerateContentTest extends TestCase
             ->method('create')
             ->with(['data' => ['input' => $prompt]])
             ->willReturn($apiRequest);
+        $spec = $this->createMock(SpecificationInterface::class);
+        $spec->expects($this->once())->method('getStoreId')->willReturn($storeId);
         $apiResponse = $this->createMock(AIResponseInterface::class);
-        $apiResponse->expects($this->once())->method('getContent')->willReturn($content);
         $provider = $this->createMock(AIProviderInterface::class);
-        $provider->expects($this->once())->method('call')->with($apiRequest)->willReturn($apiResponse);
+        $provider->expects($this->once())->method('call')->with($apiRequest, $spec)->willReturn($apiResponse);
         $this->provider->expects($this->once())->method('execute')->with($storeId)->willReturn($provider);
         $object = new GenerateContent($this->provider, $this->AIRequestInterfaceFactory);
-        $this->assertSame($content, $object->execute($prompt, $storeId));
+        $this->assertSame($apiResponse, $object->execute($prompt,$spec));
     }
 }

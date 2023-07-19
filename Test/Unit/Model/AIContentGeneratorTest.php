@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Creatuity\AIContent\Test\Unit\Model;
 
 use Creatuity\AIContent\Api\AITypedContentGeneratorInterface;
+use Creatuity\AIContent\Api\Data\AIResponseInterface;
 use Creatuity\AIContent\Api\Data\SpecificationInterface;
 use Creatuity\AIContent\Exception\ContentGeneratorNotFoundException;
 use Creatuity\AIContent\Model\AIContentGenerator;
@@ -17,7 +18,7 @@ class AIContentGeneratorTest extends TestCase
 {
     public function testExecute(): void
     {
-        $expected = 'Some text';
+        $expected = $this->createMock(AIResponseInterface::class);;
         $contentType = 'description';
         $generators = $this->mockGenerators($contentType, $expected);
         $specification = $this->createMock(SpecificationInterface::class);
@@ -31,7 +32,7 @@ class AIContentGeneratorTest extends TestCase
     public function testExecuteWrongContentType(): void
     {
         $contentType = 'some wierd type';
-        $generators = $this->mockGenerators($contentType, '');
+        $generators = $this->mockGenerators($contentType, null);
         $specification = $this->createMock(SpecificationInterface::class);
         $specification
             ->expects($this->exactly(count($generators) + 1))
@@ -81,7 +82,7 @@ class AIContentGeneratorTest extends TestCase
     /**
      * @return AITypedContentGeneratorInterface[]|MockObject[]
      */
-    private function mockGenerators(string $contentType, string $response): array
+    private function mockGenerators(string $contentType, AIResponseInterface|MockObject|null $response): array
     {
         $generatorA = $this->createMock(DefaultTypedContentGenerator::class);
         $generatorB = $this->createMock(DefaultTypedContentGenerator::class);
@@ -91,8 +92,11 @@ class AIContentGeneratorTest extends TestCase
         $generatorA->expects($this->never())->method('execute');
 
         $generatorB->expects($this->once())->method('isApplicable')->with($contentType)->willReturn((bool) $response);
-        $generatorB->expects($this->exactly($response ? 1 : 0))->method('execute')->willReturn($response);
-
+        if ($response) {
+            $generatorB->expects($this->exactly(1))->method('execute')->willReturn($response);
+        } else {
+            $generatorB->expects($this->never())->method('execute');
+        }
         $generatorC->expects($this->exactly($response ? 0 : 1))->method('isApplicable')->with($contentType)->willReturn(false);
         $generatorC->expects($this->never())->method('execute');
 

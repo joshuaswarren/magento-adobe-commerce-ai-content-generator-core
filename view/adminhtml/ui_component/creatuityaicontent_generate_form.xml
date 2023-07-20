@@ -98,8 +98,9 @@
                         </additionalClasses>
                         <validation>
                             <rule name="validate-digits" xsi:type="boolean">true</rule>
-                            <rule name="validate-greater-than-zero" xsi:type="boolean">true</rule>
+                            <rule name="validate-digits-range" xsi:type="string">1-9999</rule>
                         </validation>
+                        <notice translate="true">Max allowed value is 9999</notice>
                     </settings>
                 </field>
                 <button name="short_description_generate_btn"
@@ -167,8 +168,9 @@
                         </additionalClasses>
                         <validation>
                             <rule name="validate-digits" xsi:type="boolean">true</rule>
-                            <rule name="validate-greater-than-zero" xsi:type="boolean">true</rule>
+                            <rule name="validate-digits-range" xsi:type="string">1-9999</rule>
                         </validation>
+                        <notice translate="true">Max allowed value is 9999</notice>
                     </settings>
                 </field>
                 <button name="description_generate_btn"

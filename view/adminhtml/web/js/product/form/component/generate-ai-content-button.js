@@ -85,23 +85,29 @@ define([
         },
 
         getMinLength: function () {
-            let length = this.minLength ? uiRegistry.get(this.minLength).value() : null;
-
-            if (length && length <= 0) {
+            if (!this.minLength) {
                 return null;
             }
 
-            return length;
+            const input = uiRegistry.get(this.minLength);
+            if (input && input.error()) {
+                throw input.error();
+            }
+
+            return parseInt(input.value());
         },
 
         getMaxLength: function () {
-            let length = this.maxLength ? uiRegistry.get(this.maxLength).value() : null;
-
-            if (length && length <= 0) {
+            if (!this.maxLength) {
                 return null;
             }
 
-            return length;
+            const input = uiRegistry.get(this.maxLength);
+            if (input && input.error()) {
+                throw input.error();
+            }
+
+            return parseInt(input.value());
         },
 
         processCommon: function (data) {
@@ -137,6 +143,9 @@ define([
             if (!type) {
                 throw 'No aiContent provided';
             }
+            const minLength = this.getMinLength();
+            const maxLength = this.getMaxLength();
+
             loaderStart();
             $.ajax({
                 method: 'POST',
@@ -145,8 +154,8 @@ define([
                         "content_type": type,
                         "product_id": this.productId(),
                         "product_attributes": this.getProductAttributes(),
-                        "min_length": this.getMinLength(),
-                        "max_length": this.getMaxLength(),
+                        "min_length": minLength,
+                        "max_length": maxLength,
                         "store_id": this.storeId(),
                         "number": this.number
                     }

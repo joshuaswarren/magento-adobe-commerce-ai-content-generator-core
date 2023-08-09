@@ -9,7 +9,6 @@ use Creatuity\AIContent\Api\Data\AIResponseInterface;
 use Creatuity\AIContent\Api\Data\SpecificationInterface;
 use Creatuity\AIContent\Exception\ContentGeneratorNotFoundException;
 use Creatuity\AIContent\Model\AIContentGenerator;
-use Creatuity\AIContent\Model\AIContentGenerator\DefaultTypedContentGenerator;
 use Magento\Framework\Exception\LocalizedException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -51,10 +50,10 @@ class AIContentGeneratorTest extends TestCase
     {
         $contentType = 'description';
 
-        $generatorA = $this->createMock(DefaultTypedContentGenerator::class);
+        $generatorA = $this->createMock(AITypedContentGeneratorInterface::class);
         $generatorA->expects($this->once())->method('isApplicable')->with($contentType);
 
-        $generatorB = $this->createMock(DefaultTypedContentGenerator::class);
+        $generatorB = $this->createMock(AITypedContentGeneratorInterface::class);
         $generatorB->expects($this->once())->method('isApplicable')->with($contentType);
 
         $specification = $this->createMock(SpecificationInterface::class);
@@ -84,9 +83,9 @@ class AIContentGeneratorTest extends TestCase
      */
     private function mockGenerators(string $contentType, AIResponseInterface|MockObject|null $response): array
     {
-        $generatorA = $this->createMock(DefaultTypedContentGenerator::class);
-        $generatorB = $this->createMock(DefaultTypedContentGenerator::class);
-        $generatorC = $this->createMock(DefaultTypedContentGenerator::class);
+        $generatorA = $this->createMock(AITypedContentGeneratorInterface::class);
+        $generatorB = $this->createMock(AITypedContentGeneratorInterface::class);
+        $generatorC = $this->createMock(AITypedContentGeneratorInterface::class);
 
         $generatorA->expects($this->once())->method('isApplicable')->with($contentType)->willReturn(false);
         $generatorA->expects($this->never())->method('execute');

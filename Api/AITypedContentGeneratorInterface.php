@@ -12,11 +12,6 @@ interface AITypedContentGeneratorInterface extends AIContentGeneratorInterface
     public function getType(): string;
 
     /**
-     * @return string
-     */
-    public function getPromptTemplate(): string;
-
-    /**
      * @param string $contentType
      * @return bool
      */

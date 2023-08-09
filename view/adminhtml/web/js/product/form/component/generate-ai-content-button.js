@@ -3,8 +3,9 @@ define([
     'Magento_Ui/js/form/components/button',
     'uiRegistry',
     'Magento_Ui/js/modal/alert',
+    'wysiwygAdapter',
     'loader'
-], function ($, Button, uiRegistry, alert) {
+], function ($, Button, uiRegistry, alert, wysiwygAdapter) {
     'use strict';
 
     const loaderStart = function () {
@@ -61,14 +62,20 @@ define([
             let choices = data.choices;
 
             $.each(destinations, function (key, dest) {
-                if (!choices.length) {
+                if (!choices || !choices.length) {
                     return;
                 }
                 const destination = uiRegistry.get(dest);
                 destination.value.subscribe(function (val) {
                     this.setApplyBtnDisableSate(!(val && val.length), destination.applyBtn)
                 }.bind(this))
-                destination.value(choices.pop());
+                const content = choices.pop();
+                if (destination.formElement === 'wysiwyg') {
+                    const editor = wysiwygAdapter.get(destination.wysiwygId);
+                    editor.setContent(content);
+                    wysiwygAdapter.triggerSave();
+                }
+                destination.value(content);
                 destination.visible(true);
                 $.each(destination.containers || [], function (key, container) {
                     container.visible(true);

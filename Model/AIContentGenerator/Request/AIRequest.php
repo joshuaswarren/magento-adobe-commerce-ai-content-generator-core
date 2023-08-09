@@ -10,13 +10,31 @@ use Magento\Framework\DataObject;
 class AIRequest extends DataObject implements AIRequestInterface
 {
 
-    public function getInput(): string
+    public function setParam(string $param, mixed $value): void
     {
-        return (string) $this->getData(self::INPUT_FIELD);
+        $params = $this->getParams();
+        $params[$param] = $value;
+
+        $this->setData('params', $params);
     }
 
-    public function setInput(string $input): void
+    public function getParam(string $param): mixed
     {
-        $this->setData(self::INPUT_FIELD, $input);
+        return $this->getParams()[$param] ?? null;
+    }
+
+    public function getParams(): array
+    {
+        return $this->_data['params'] ?? [];
+    }
+
+    public function getPrompt(): array
+    {
+        return (array) $this->getData(self::PROMPT);
+    }
+
+    public function setPrompt(array $prompt): void
+    {
+        $this->setData(self::PROMPT, $prompt);
     }
 }

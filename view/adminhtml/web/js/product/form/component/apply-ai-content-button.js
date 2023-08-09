@@ -17,13 +17,14 @@ define([
         $(document.body).trigger('processStop')
     };
 
-    const displayAlert = function (title, msg) {
+    const displayAlert = function (title, msg, buttons) {
         alert({
             title: title,
             content: msg,
             actions: {
                 always: function(){}
-            }
+            },
+            buttons: buttons
         })
     };
 
@@ -66,6 +67,11 @@ define([
 
         getGeneratedContent: function () {
             const source = uiRegistry.get(this.sourceField);
+            if (source.formElement === 'wysiwyg') {
+                const editor = wysiwygAdapter.get(source.wysiwygId);
+
+                return editor.getContent();
+            }
 
             return source.value();
         },
@@ -96,7 +102,24 @@ define([
             msg += '<br /><br />';
             msg += $.mage.__('The <strong>%1</strong> field uses Page Builder to manage its content and you must edit it manually. Please copy generated content and paste it in desired place.').replace('%1', this.destinationFieldTitle || $.mage.__('proper'));
 
-            displayAlert($.mage.__('Manual Action Required'), msg);
+            displayAlert(
+                $.mage.__('Manual Action Required'),
+                msg,
+                [
+                    {
+                        text: $.mage.__('Copy'),
+                        'class': 'action-primary action-basic',
+
+                        /**
+                         * Click action.
+                         */
+                        click: function () {
+                            navigator.clipboard.writeText(this.getGeneratedContent())
+                            window.alert('Copied to clipboard');
+                        }.bind(this)
+                    }
+                ]
+            );
         },
 
         setApplyBtnDisableSate: function (state) {

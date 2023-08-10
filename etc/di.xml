@@ -54,4 +54,28 @@
             </argument>
         </arguments>
     </type>
+
+    <virtualType name="CreatuityAIContentDebugHandler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/creatuity-aicontent.log</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="CreatuityAIContentLogger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="debug" xsi:type="object">CreatuityAIContentDebugHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Creatuity\AIContent\Plugin\LogRequestResponsePlugin">
+        <arguments>
+            <argument name="logger" xsi:type="object">CreatuityAIContentLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="Creatuity\AIContent\Api\AIProviderInterface">
+        <plugin name="Creatuity_AIContent::log_request_response" type="Creatuity\AIContent\Plugin\LogRequestResponsePlugin" sortOrder="1" />
+    </type>
 </config>

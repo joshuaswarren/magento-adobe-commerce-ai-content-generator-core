@@ -9,6 +9,7 @@ use Magento\Store\Model\ScopeInterface;
 class AiContentGeneralConfig
 {
     private const XML_PATH_AICONTENT_ENABLED = 'creatuityaicontent/general/enabled';
+    private const XML_PATH_AICONTENT_DEBUG_ENABLED = 'creatuityaicontent/general/debug_enabled';
     private const XML_PATH_DESC_ATTRS = 'creatuityaicontent/general/product_description_attributes';
     private const XML_PATH_METATAGS_ATTRS = 'creatuityaicontent/general/product_meta_tags_attributes';
     private const XML_PATH_AI_PROVIDER = 'creatuityaicontent/general/aiprovider';
@@ -64,5 +65,10 @@ class AiContentGeneralConfig
         $attrs = explode(',', $val);
 
         return array_map('trim', $attrs);
+    }
+
+    public function isDebugEnabled(): bool
+    {
+        return $this->scopeConfig->isSetFlag(self::XML_PATH_AICONTENT_DEBUG_ENABLED);
     }
 }

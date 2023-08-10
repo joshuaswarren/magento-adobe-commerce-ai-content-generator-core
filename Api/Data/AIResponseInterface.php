@@ -17,5 +17,5 @@ interface AIResponseInterface
      * @param string[] $choices
      * @return void
      */
-    public function setChoices(string $choices): void;
+    public function setChoices(array $choices): void;
 }

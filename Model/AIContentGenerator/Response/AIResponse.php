@@ -14,8 +14,8 @@ class AIResponse extends DataObject implements AIResponseInterface
         return (array) $this->getData(self::CHOICES_FIELD);
     }
 
-    public function setChoices(string $content): void
+    public function setChoices(array $choices): void
     {
-        $this->setData(self::CHOICES_FIELD, $content);
+        $this->setData(self::CHOICES_FIELD, $choices);
     }
 }

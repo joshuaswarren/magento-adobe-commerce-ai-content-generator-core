@@ -1,64 +1,15 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Creatuity\AIContent\Api\AIContentGeneratorInterface" type="Creatuity\AIContent\Model\AIContentGenerator"/>
-    <preference for="Creatuity\AIContent\Api\AITypedContentGeneratorInterface" type="Creatuity\AIContent\Model\AIContentGenerator\DefaultTypedContentGenerator"/>
     <preference for="Creatuity\AIContent\Api\Data\SpecificationInterface" type="Creatuity\AIContent\Model\Specification"/>
     <preference for="Creatuity\AIContent\Api\Data\AIRequestInterface" type="Creatuity\AIContent\Model\AIContentGenerator\Request\AIRequest"/>
     <preference for="Creatuity\AIContent\Api\Data\AIResponseInterface" type="Creatuity\AIContent\Model\AIContentGenerator\Response\AIResponse"/>
     <preference for="Creatuity\AIContent\Model\Attribute\AttributesDataProviderInterface" type="Creatuity\AIContent\Model\Attribute\AttributesForProductAndChildren"/>
-
-    <type name="Creatuity\AIContent\Model\AIContentGenerator\DefaultTypedContentGenerator">
-        <arguments>
-            <argument name="attributesDataProvider" xsi:type="object">Creatuity\AIContent\Model\Attribute\AttributesForProductAndChildren</argument>
-        </arguments>
-    </type>
-
-    <virtualType name="ShortDescriptionGenerator" type="Creatuity\AIContent\Model\AIContentGenerator\DefaultTypedContentGenerator">
-        <arguments>
-            <argument name="type" xsi:type="string">short_description</argument>
-            <argument name="promptTemplate" xsi:type="string">Generate product %type based on product attributes given below. IMPORTANT: Generated text must not be longer than %max_len characters. You can use HTML tags to format the look.</argument>
-        </arguments>
-    </virtualType>
-
-    <virtualType name="DescriptionGenerator" type="Creatuity\AIContent\Model\AIContentGenerator\DefaultTypedContentGenerator">
-        <arguments>
-            <argument name="type" xsi:type="string">description</argument>
-            <argument name="promptTemplate" xsi:type="string">Generate product %type based on product attributes given below. IMPORTANT: Generated text must not be longer than %max_len characters. You can use HTML tags to format the look</argument>
-        </arguments>
-    </virtualType>
-
-    <virtualType name="MetaDescriptionGenerator" type="Creatuity\AIContent\Model\AIContentGenerator\DefaultTypedContentGenerator">
-        <arguments>
-            <argument name="type" xsi:type="string">meta-description</argument>
-            <argument name="promptTemplate" xsi:type="string">Generate website %type for the products with attributes given below. IMPORTANT: Generated text must not be longer than 150 characters.</argument>
-            <argument name="attributes" xsi:type="array">
-                <item name="name" xsi:type="string">name</item>
-                <item name="description" xsi:type="string">description</item>
-            </argument>
-        </arguments>
-    </virtualType>
-
-    <virtualType name="MetaKeywordsGenerator" type="Creatuity\AIContent\Model\AIContentGenerator\DefaultTypedContentGenerator">
-        <arguments>
-            <argument name="type" xsi:type="string">meta-keywords</argument>
-            <argument name="promptTemplate" xsi:type="string">Generate from 8 to 10 comma-separated website %type for the product with attributes given below.</argument>
-            <argument name="attributes" xsi:type="array">
-                <item name="name" xsi:type="string">name</item>
-                <item name="description" xsi:type="string">description</item>
-            </argument>
-        </arguments>
-    </virtualType>
-
-    <virtualType name="MetaTitleGenerator" type="Creatuity\AIContent\Model\AIContentGenerator\DefaultTypedContentGenerator">
-        <arguments>
-            <argument name="type" xsi:type="string">meta-title</argument>
-            <argument name="promptTemplate" xsi:type="string">Generate website %type for the products with attributes given below. IMPORTANT: Generated text must not be longer than 60 characters and should be at least 50 characters.</argument>
-            <argument name="attributes" xsi:type="array">
-                <item name="name" xsi:type="string">name</item>
-                <item name="description" xsi:type="string">description</item>
-            </argument>
-        </arguments>
-    </virtualType>
+    <virtualType name="ShortDescriptionGenerator" type="Creatuity\AIContent\Api\AITypedContentGeneratorInterface"/>
+    <virtualType name="DescriptionGenerator" type="Creatuity\AIContent\Api\AITypedContentGeneratorInterface"/>
+    <virtualType name="MetaDescriptionGenerator" type="Creatuity\AIContent\Api\AITypedContentGeneratorInterface"/>
+    <virtualType name="MetaKeywordsGenerator" type="Creatuity\AIContent\Api\AITypedContentGeneratorInterface"/>
+    <virtualType name="MetaTitleGenerator" type="Creatuity\AIContent\Api\AITypedContentGeneratorInterface"/>
 
     <type name="Creatuity\AIContent\Model\AIContentGenerator">
         <arguments>

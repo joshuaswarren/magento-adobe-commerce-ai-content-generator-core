@@ -6,21 +6,35 @@ namespace Creatuity\AIContent\Api\Data;
 
 interface AIRequestInterface
 {
-    public const INPUT_FIELD = 'input';
+    public const PROMPT = 'prompt';
 
     /**
-     * @return string
+     * @return PromptInterface[]
      */
-    public function getInput(): string;
+    public function getPrompt(): array;
 
     /**
-     * @return mixed[]
-     */
-    public function getData();
-
-    /**
-     * @param string $input
+     * @param string $param
+     * @param mixed $value
      * @return void
      */
-    public function setInput(string $input): void;
+    public function setParam(string $param, mixed $value): void;
+
+    /**
+     * @param string $param
+     * @return mixed
+     */
+    public function getParam(string $param): mixed;
+
+    /**
+     * @return mixed
+     */
+    public function getParams(): mixed;
+
+
+    /**
+     * @param PromptInterface[] $prompt
+     * @return void
+     */
+    public function setPrompt(array $prompt): void;
 }

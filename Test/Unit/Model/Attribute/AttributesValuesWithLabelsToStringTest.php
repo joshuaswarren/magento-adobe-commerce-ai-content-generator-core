@@ -21,7 +21,7 @@ class AttributesValuesWithLabelsToStringTest extends TestCase
             'Size' => ['XL', 'M', 'L'],
             'Product Name' => ['majtki']
         ];
-        $expected = "Color: red, blue\nSize: XL, M, L\nProduct Name: majtki";
+        $expected = "<attribute>Color: red, blue</attribute>\n<attribute>Size: XL, M, L</attribute>\n<attribute>Product Name: majtki</attribute>";
         $this->assertSame($expected, (new AttributesValuesWithLabelsToString())->execute($attrValuesLabels));
     }
 }

@@ -21,7 +21,7 @@ class AttributesValuesWithLabelsToString
             if (!$values) {
                 continue;
             }
-            $desc[$label] = ($label ?: '') . ': ' . implode(', ', $values);
+            $desc[$label] = '<attribute>' . ($label ?: '') . ': ' . implode(', ', $values) . '</attribute>';
         }
 
         return implode("\n", $desc);

@@ -30,6 +30,23 @@ define([
 
     return Button.extend({
 
+        initialize: function () {
+            this._super();
+
+            if (this.delete()) {
+                this.remove();
+            }
+        },
+
+        initObservable: function () {
+            this._super()
+                .observe([
+                    'delete'
+                ]);
+
+            return this;
+        },
+
         action: function () {
             try {
                 this.run();

@@ -5,11 +5,30 @@
     <preference for="Creatuity\AIContent\Api\Data\AIRequestInterface" type="Creatuity\AIContent\Model\AIContentGenerator\Request\AIRequest"/>
     <preference for="Creatuity\AIContent\Api\Data\AIResponseInterface" type="Creatuity\AIContent\Model\AIContentGenerator\Response\AIResponse"/>
     <preference for="Creatuity\AIContent\Model\Attribute\AttributesDataProviderInterface" type="Creatuity\AIContent\Model\Attribute\AttributesForProductAndChildren"/>
+    <preference for="Creatuity\AIContent\Model\DataProvider\ProductId\AIFormProductIdProviderInterface" type="Creatuity\AIContent\Model\DataProvider\ProductId\AIFormProductIdProvider"/>
+    <preference for="Creatuity\AIContent\Model\DataProvider\ContentType\AIFormContentTypeProviderInterface" type="Creatuity\AIContent\Model\DataProvider\ContentType\AIFormContentTypeProvider"/>
+
     <virtualType name="ShortDescriptionGenerator" type="Creatuity\AIContent\Api\AITypedContentGeneratorInterface"/>
     <virtualType name="DescriptionGenerator" type="Creatuity\AIContent\Api\AITypedContentGeneratorInterface"/>
     <virtualType name="MetaDescriptionGenerator" type="Creatuity\AIContent\Api\AITypedContentGeneratorInterface"/>
     <virtualType name="MetaKeywordsGenerator" type="Creatuity\AIContent\Api\AITypedContentGeneratorInterface"/>
     <virtualType name="MetaTitleGenerator" type="Creatuity\AIContent\Api\AITypedContentGeneratorInterface"/>
+
+    <type name="Creatuity\AIContent\Model\DataProvider\ProductId\AIFormProductIdProvider">
+        <arguments>
+            <argument name="providers" xsi:type="array">
+                <item name="from_request_provider" sortOrder="10" xsi:type="object">Creatuity\AIContent\Model\DataProvider\ProductId\AIFormProductIdFromRequest</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Creatuity\AIContent\Model\DataProvider\ContentType\AIFormContentTypeProvider">
+        <arguments>
+            <argument name="providers" xsi:type="array">
+                <item name="from_request_provider" sortOrder="10" xsi:type="object">Creatuity\AIContent\Model\DataProvider\ContentType\AIFormContentTypeFromRequest</item>
+            </argument>
+        </arguments>
+    </type>
 
     <type name="Creatuity\AIContent\Model\AIContentGenerator">
         <arguments>

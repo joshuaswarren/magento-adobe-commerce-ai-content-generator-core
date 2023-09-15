@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Creatuity\AIContent\Ui\Component\Form;
 
-use Magento\Framework\App\RequestInterface;
+use Creatuity\AIContent\Model\DataProvider\ContentType\AIFormContentTypeProviderInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 
 class Fieldset extends \Magento\Ui\Component\Form\Fieldset
 {
     public function __construct(
-        private readonly RequestInterface $request,
         ContextInterface $context,
+        private readonly AIFormContentTypeProviderInterface $contentTypeProvider,
         array $components = [],
         array $data = []
     ) {
@@ -21,7 +21,7 @@ class Fieldset extends \Magento\Ui\Component\Form\Fieldset
     public function getConfiguration(): array
     {
         $config = parent::getConfiguration();
-        $config['visible'] = $this->request->getQuery('ai_content_group') === $this->getName();
+        $config['visible'] = $this->contentTypeProvider->get() === $this->getName();
         $config['opened'] = $config['visible'];
 
         return $config;

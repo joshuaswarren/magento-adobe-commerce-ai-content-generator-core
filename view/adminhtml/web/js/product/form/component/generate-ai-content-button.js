@@ -4,8 +4,9 @@ define([
     'uiRegistry',
     'Magento_Ui/js/modal/alert',
     'wysiwygAdapter',
+    'ko',
     'loader'
-], function ($, Button, uiRegistry, alert, wysiwygAdapter) {
+], function ($, Button, uiRegistry, alert, wysiwygAdapter, ko) {
     'use strict';
 
     const loaderStart = function () {
@@ -17,21 +18,14 @@ define([
     };
 
     return Button.extend({
-        defaults: {
-            imports: {
-                productId: "${ $.provider }:data.product_id",
-                settings: "${ $.provider }:data.settings",
-                storeId: "${ $.provider }:data.store_id"
-            }
-        },
 
         initObservable: function () {
             this._super()
                 .observe([
                     'productId',
-                    'storeId'
+                    'storeId',
+                    'settings'
                 ]);
-
             return this;
         },
 

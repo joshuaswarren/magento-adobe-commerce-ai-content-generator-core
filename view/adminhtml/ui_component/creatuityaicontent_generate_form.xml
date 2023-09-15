@@ -124,6 +124,11 @@
                         template="ui/form/components/button/container">
                     <settings>
                         <title translate="true">Generate</title>
+                        <imports>
+                            <link name="productId">${ $.provider }:data.product_id</link>
+                            <link name="settings">${ $.provider }:data.settings</link>
+                            <link name="storeId">${ $.provider }:data.storeId</link>
+                        </imports>
                     </settings>
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
@@ -209,6 +214,11 @@
                         template="ui/form/components/button/container">
                     <settings>
                         <title translate="true">Generate</title>
+                        <imports>
+                            <link name="productId">${ $.provider }:data.product_id</link>
+                            <link name="settings">${ $.provider }:data.settings</link>
+                            <link name="storeId">${ $.provider }:data.storeId</link>
+                        </imports>
                     </settings>
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
@@ -299,6 +309,11 @@
                         template="ui/form/components/button/container">
                     <settings>
                         <title translate="true">Generate</title>
+                        <imports>
+                            <link name="productId">${ $.provider }:data.product_id</link>
+                            <link name="settings">${ $.provider }:data.settings</link>
+                            <link name="storeId">${ $.provider }:data.storeId</link>
+                        </imports>
                     </settings>
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
@@ -454,6 +469,11 @@
                         template="ui/form/components/button/container">
                     <settings>
                         <title translate="true">Generate</title>
+                        <imports>
+                            <link name="productId">${ $.provider }:data.product_id</link>
+                            <link name="settings">${ $.provider }:data.settings</link>
+                            <link name="storeId">${ $.provider }:data.storeId</link>
+                        </imports>
                     </settings>
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
@@ -608,6 +628,11 @@
                         template="ui/form/components/button/container">
                     <settings>
                         <title translate="true">Generate</title>
+                        <imports>
+                            <link name="productId">${ $.provider }:data.product_id</link>
+                            <link name="settings">${ $.provider }:data.settings</link>
+                            <link name="storeId">${ $.provider }:data.storeId</link>
+                        </imports>
                     </settings>
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">

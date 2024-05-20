@@ -97,6 +97,7 @@ define([
             const el = uiRegistry.get(this.destination);
             const editor = wysiwygAdapter.get(el.wysiwygId);
             editor.setContent(this.getGeneratedContent());
+            el.value(this.getGeneratedContent());
             wysiwygAdapter.triggerSave();
 
             this.displaySuccess();

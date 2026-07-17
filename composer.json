@@ -1,6 +1,6 @@
 {
     "name": "joshuaswarren/magento-adobe-commerce-ai-content-generator-core",
-    "description": "Creatuity AI Content Generator Core",
+    "description": "AI content generator core for Adobe Commerce",
     "version": "0.0.3",
     "type": "magento2-module",
     "license": [
